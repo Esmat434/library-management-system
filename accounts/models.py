@@ -47,3 +47,6 @@ class AccountVerificationToken(TokenBaseClass):
 
 class ChangePasswordToken(TokenBaseClass):
     token = models.UUIDField(default=uuid4)
+
+class ForgotPasswordToken(TokenBaseClass):
+    token = models.UUIDField(default=uuid4)
