@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
+from uuid import uuid4
 
 class CustomUser(AbstractUser):
     CHOICE_ROLE = [
@@ -21,3 +22,8 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.username
+
+class AccountVerificationToken(models.Model):
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid4())
+    created_at = models.DateTimeField(auto_now_add=True)
