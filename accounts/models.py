@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to=('user/profile_image'))
     passport = models.ImageField(upload_to=('user/passport_image'))
-    phone_number = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=150,blank=True)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     country = CountryField()
