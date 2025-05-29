@@ -14,15 +14,15 @@ def create_account_verify_token(sender,created,instance,**kwargs):
 
 @receiver(post_save,sender = AccountVerificationToken)
 def send_email_account_verification_token(sender,created,instance,**kwargs):
-    if created:
-        send_verification_mail(instance.user.email,'Account Verification Link',instance.token)
+    
+    send_verification_mail(instance.user.email,'Account Verification Link',instance.token)
 
 @receiver(post_save,sender = ChangePasswordToken)
 def send_email_change_password_token(sender,created,instance,**kwargs):
-    if created:
-        send_verification_mail(instance.user.email,'Change Password Verification Link',instance.token)
+    
+    send_verification_mail(instance.user.email,'Change Password Verification Link',instance.token)
 
 @receiver(post_save,sender = ForgotPasswordToken)
 def send_email_forgot_password_token(sender,created,instance,**kwargs):
-    if created:
-        send_verification_mail(instance.user.email,'Forgot Password Verification Link',instance.token)
+    
+    send_verification_mail(instance.user.email,'Forgot Password Verification Link',instance.token)
