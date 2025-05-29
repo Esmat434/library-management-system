@@ -135,3 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Login Attempts Requirement
+MAX_LOGIN_ATTEMPTS = 5
+LOGIN_ATTEMPT_LOCKOUT_TIME = 60
