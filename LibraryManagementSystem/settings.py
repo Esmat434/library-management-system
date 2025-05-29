@@ -139,3 +139,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Login Attempts Requirement
 MAX_LOGIN_ATTEMPTS = 5
 LOGIN_ATTEMPT_LOCKOUT_TIME = 60
+
+# Maintenance Mode
+MAINTENANCE_MODE  = False
