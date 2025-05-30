@@ -138,3 +138,57 @@ class UserUpdateForm(forms.ModelForm):
         if not status:
             raise forms.ValidationError("your age at least 18+")
         return birth_date
+
+class ChangePasswordForm(forms.Form):
+    password1 = forms.CharField(
+        max_length=128,
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Password'})
+    )
+    password2 = forms.CharField(
+        max_length=128,
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Confirmation Password.'})
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data['password1']
+        password2 = cleaned_data['password2']
+
+        if password1 != password2:
+            raise forms.ValidationError("Your password must be same with confirmation password.")
+        
+        status = validate_password(password1)
+        
+        if not status:
+            raise forms.ValidationError("Your password must be contain one upper case one lower case letter and one digit and one !@#$%^&*")
+
+        return cleaned_data
+
+class ForgotPasswordForm(forms.Form):
+    password1 = forms.CharField(
+        max_length=128,
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Password'})
+    )
+    password2 = forms.CharField(
+        max_length=128,
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Confirmation Password.'})
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data['password1']
+        password2 = cleaned_data['password2']
+
+        if password1 != password2:
+            raise forms.ValidationError("Your password must be same with confirmation password.")
+        
+        status = validate_password(password1)
+        
+        if not status:
+            raise forms.ValidationError("Your password must be contain one upper case one lower case letter and one digit and one !@#$%^&*")
+
+        return cleaned_data
