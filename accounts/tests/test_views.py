@@ -183,3 +183,22 @@ class TestLogoutView(TestCase):
         response = self.client.post(self.url)
 
         self.assertEqual(response.status_code,302)
+
+class TestProfileView(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:profile')
+
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+
+        self.client.login(username='test', password='Test12345%')
+    
+    def test_get_profile_view_validate(self):
+        response = self.client.get(self.url)
+
+        self.assertTemplateUsed(response,'accounts/profile.html')
+        self.assertEqual(response.context['user'],self.user)
+        self.assertEqual(response.status_code,200)
