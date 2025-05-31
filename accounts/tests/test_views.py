@@ -72,7 +72,7 @@ class TestAcountVerifiedToken(TestCase):
 
         self.user = CustomUser.objects.create_user(
             username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
-            address='test', city='test', country='AF', birth_date='2020-01-02'
+            address='test', city='test', country='AF', birth_date='2020-01-02',password='Test12345%'
         )
 
         self.token = AccountVerificationToken.objects.create(
@@ -104,7 +104,7 @@ class TestResendAccountVerifiedTokenView(TestCase):
         
         self.user = CustomUser.objects.create_user(
             username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
-            address='test', city='test', country='AF', birth_date='2020-01-02'
+            address='test', city='test', country='AF', birth_date='2020-01-02',password='Test12345%'
         )
         
         self.data = {
@@ -122,3 +122,41 @@ class TestResendAccountVerifiedTokenView(TestCase):
 
         self.assertTemplateUsed(response,'accounts/account_verified_message.html')
         self.assertEqual(response.status_code,200)
+
+class TestLoginView(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:login')
+        
+        self.avatar_file = SimpleUploadedFile(
+            name='test_avatar.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+
+        self.passport_file = SimpleUploadedFile(
+            name='test_passport.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+        
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+
+        self.data = {
+            'username':'test',
+            'password':'Test12345%'
+        }
+    
+    def test_get_login_view_validate(self):
+        response = self.client.get(self.url)
+
+        self.assertTemplateUsed(response,'accounts/login.html')
+        self.assertEqual(response.status_code,200)
+    
+    def test_post_login_view_validate(self):
+        response = self.client.post(self.url, data=self.data)
+
+        self.assertEqual(response.status_code,302)
