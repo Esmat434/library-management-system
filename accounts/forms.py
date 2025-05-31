@@ -74,8 +74,11 @@ class UserForm(forms.ModelForm):
     def clean(self):
         cleaned_data =  super().clean()
 
-        password1 = cleaned_data['password']
-        password2 = cleaned_data['password1']
+        password1 = cleaned_data.get('password')
+        password2 = cleaned_data.get('password1')
+        
+        if not password1 or not password2:
+            raise forms.ValidationError("Your must set your password")
 
         if password1 != password2:
             raise forms.ValidationError("Your password must be same with confirmation password")
