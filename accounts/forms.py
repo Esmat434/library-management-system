@@ -88,6 +88,14 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError("your password must be contain one upper case one lower case letter and one digit and one !@#$%^&*")
         
         return cleaned_data
+    
+    def save(self, commit = True):
+        user = super().save(commit = False)
+        user.set_password(self.cleaned_data['password'])
+
+        if commit:
+            user.save()
+        return user
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
