@@ -64,5 +64,5 @@ class TestUpdateUserForm(TestCase):
 
     def test_update_user_form_validate(self):
         form = UserUpdateForm(self.form_data,instance=self.user)
-        print(form.errors)
+        
         self.assertEqual(form.is_valid(),True)
