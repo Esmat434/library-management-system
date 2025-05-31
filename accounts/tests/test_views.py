@@ -85,3 +85,40 @@ class TestAcountVerifiedToken(TestCase):
         response = self.client.get(self.url)
         self.assertRedirects(response,reverse('accounts:login'))
         self.assertEqual(response.status_code,302)
+
+class TestResendAccountVerifiedTokenView(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:resend_account_token')
+        
+        self.avatar_file = SimpleUploadedFile(
+            name='test_avatar.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+
+        self.passport_file = SimpleUploadedFile(
+            name='test_passport.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+        
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
+            address='test', city='test', country='AF', birth_date='2020-01-02'
+        )
+        
+        self.data = {
+            'email':'test@gmail.com'
+        }
+
+    def test_get_resend_account_verified_token_view_validate(self):
+        response = self.client.get(self.url)
+        
+        self.assertTemplateUsed(response,'accounts/resend_account_verified_token.html')
+        self.assertEqual(response.status_code,200)
+    
+    def test_post_resend_account_verified_token_view_validate(self):
+        response = self.client.post(self.url, data=self.data)
+
+        self.assertTemplateUsed(response,'accounts/account_verified_message.html')
+        self.assertEqual(response.status_code,200)
