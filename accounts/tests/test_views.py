@@ -217,3 +217,26 @@ class TestProfileUpdateView(TestCase):
 
         self.assertRedirects(response,reverse('accounts:profile'))
         self.assertEqual(response.status_code,302)
+
+class TestChangePasswordTokenView(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:change_password_token')
+
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+        self.client.login(username='test', password='Test12345%')
+
+    def test_get_change_password_token_view_validate(self):
+        response = self.client.get(self.url)
+
+        self.assertTemplateUsed(response,'accounts/change_password_token.html')
+        self.assertEqual(response.status_code,200)
+    
+    def test_post_change_password_token_view_validate(self):
+        response = self.client.post(self.url)
+
+        self.assertTemplateUsed(response,'accounts/change_password_token.html')
+        self.assertEqual(response.status_code,200)
