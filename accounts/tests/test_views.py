@@ -296,3 +296,42 @@ class TestForgotPasswordTokenView(TestCase):
 
         self.assertTemplateUsed(response,'accounts/forgot_password_token_message.html')
         self.assertEqual(response.status_code,200)
+
+class TestForgotPasswordView(TestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+
+        self.token = ForgotPasswordToken.objects.create(
+            user = self.user
+        )
+
+        self.data = {
+            'password1':'Test123123$',
+            'password2':'Test123123$'
+        }
+
+        self.url = reverse('accounts:forgot_password',args=[self.token.token])
+
+    def test_get_forgot_password_view_validate(self):
+        response = self.client.get(self.url)
+        form = ForgotPasswordForm()
+
+        self.assertTemplateUsed(response,'accounts/forgot_password.html')
+        self.assertEqual(response.status_code,200)
+
+        self.assertIn('token',response.context)
+        self.assertIn('form',response.context)
+        self.assertIsInstance(self.token,ForgotPasswordToken)
+        self.assertIsInstance(form,ForgotPasswordForm)
+        self.assertEqual(response.context['token'],self.token.token)
+        self.assertFalse(form.is_bound)
+    
+    def test_post_forgot_password_view_validate(self):
+        response = self.client.post(self.url, data=self.data)
+
+        self.assertRedirects(response,reverse('accounts:login'))
+        self.assertEqual(response.status_code,302)
