@@ -8,7 +8,7 @@ from django.contrib.auth import login,logout,authenticate,update_session_auth_ha
 from django.views import View
 
 from .mixins import (
-    LoginRequiredMixin,LogoutRequiredMixin,AccountVerifiedMixin
+    LoginRequiredMixin,LogoutRequiredMixin,AccountVerifiedBeforeLoginMixin
 )
 
 from .forms import (
@@ -71,7 +71,7 @@ class AccountVerifiedTokenView(LogoutRequiredMixin,View):
 class ResendAccountVerifiedTokenView(LogoutRequiredMixin,View):
     
     def get(self,request):
-        return render(request,'resend_account_verified_token.html')
+        return render(request,'accounts/resend_account_verified_token.html')
     
     def post(self,request):
         email = request.POST.get('email')
@@ -91,7 +91,7 @@ class ResendAccountVerifiedTokenView(LogoutRequiredMixin,View):
             return HttpResponseNotFound("Your email is incorrect")
 
 
-class LoginView(AccountVerifiedMixin,View):
+class LoginView(AccountVerifiedBeforeLoginMixin,View):
     def get(self,request):
         return render(request,'accounts/login.html')
     
@@ -223,17 +223,17 @@ class ForgotPasswordView(LogoutRequiredMixin,View):
         return render(request,'accounts/forgot_password.html',{'token':token,'form':form})
     
     def post(self,request,token):
-        token_val = self.check_token(token)
-        if not token_val:
+        token_instance = self.check_token(token)
+        if not token_instance:
             return HttpResponseNotFound("Your Token Does Not Exists.")
         
-        form = ForgotPasswordForm(request)
+        form = ForgotPasswordForm(request.POST)
         
         if form.is_valid():
-            token.user.set_password(form.cleaned_data['password1'])
-            token.user.save()
+            token_instance.user.set_password(form.cleaned_data['password1'])
+            token_instance.user.save()
 
-            token_val.delete()
+            token_instance.delete()
 
             return redirect('accounts:login')
         else:
@@ -245,6 +245,6 @@ class ForgotPasswordView(LogoutRequiredMixin,View):
             token_instance = ForgotPasswordToken.objects.get(token = token)
             if hasattr(token_instance,'is_expired') and token_instance.is_expired():
                 return None
-            return token
+            return token_instance
         except ForgotPasswordToken.DoesNotExist:
             return None
