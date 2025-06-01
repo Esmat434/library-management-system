@@ -58,20 +58,9 @@ class TestRegisterView(TestCase):
 
 class TestAcountVerifiedToken(TestCase):
     def setUp(self):
-        self.avatar_file = SimpleUploadedFile(
-            name='test_avatar.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
-
-        self.passport_file = SimpleUploadedFile(
-            name='test_passport.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
 
         self.user = CustomUser.objects.create_user(
-            username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
+            username='test', email='test@gmail.com', avatar='', passport='', 
             address='test', city='test', country='AF', birth_date='2020-01-02',password='Test12345%'
         )
 
@@ -90,20 +79,8 @@ class TestResendAccountVerifiedTokenView(TestCase):
     def setUp(self):
         self.url = reverse('accounts:resend_account_token')
         
-        self.avatar_file = SimpleUploadedFile(
-            name='test_avatar.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
-
-        self.passport_file = SimpleUploadedFile(
-            name='test_passport.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
-        
         self.user = CustomUser.objects.create_user(
-            username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
+            username='test', email='test@gmail.com', avatar='', passport='', 
             address='test', city='test', country='AF', birth_date='2020-01-02',password='Test12345%'
         )
         
@@ -127,20 +104,8 @@ class TestLoginView(TestCase):
     def setUp(self):
         self.url = reverse('accounts:login')
         
-        self.avatar_file = SimpleUploadedFile(
-            name='test_avatar.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
-
-        self.passport_file = SimpleUploadedFile(
-            name='test_passport.gif',
-            content=IMAGE_FILE_CONTENT,
-            content_type='image/gif'
-        )
-        
         self.user = CustomUser.objects.create_user(
-            username='test', email='test@gmail.com', avatar=self.avatar_file, passport=self.passport_file, 
+            username='test', email='test@gmail.com', avatar='', passport='', 
             address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -202,3 +167,53 @@ class TestProfileView(TestCase):
         self.assertTemplateUsed(response,'accounts/profile.html')
         self.assertEqual(response.context['user'],self.user)
         self.assertEqual(response.status_code,200)
+
+class TestProfileUpdateView(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:profile_update')
+        
+        self.avatar_file = SimpleUploadedFile(
+            name='test_avatar.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+
+        self.passport_file = SimpleUploadedFile(
+            name='test_passport.gif',
+            content=IMAGE_FILE_CONTENT,
+            content_type='image/gif'
+        )
+
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+
+        self.client.login(username='test', password='Test12345%')
+
+        self.form_data = {
+            'username':'test_ini','email':'test_ini@gmail.com','first_name':'testing','last_name':'testing',
+            'phone_number':'+93771230009','address':'address','city':'city',
+            'country':'AF','birth_date':'2005-01-02'
+        }
+
+    def test_get_profile_update_view_validate(self):
+        response = self.client.get(self.url)
+        
+        self.assertTemplateUsed(response,'accounts/profile_update.html')
+        self.assertEqual(response.status_code,200)
+        self.assertIn('form',response.context)
+        self.assertIsInstance(response.context['form'],UserUpdateForm)
+        self.assertEqual(response.context['form'].instance,self.user)
+    
+    def test_post_profile_update_view_validate(self):
+        data = {
+            **self.form_data,
+            'avatar':self.avatar_file,
+            'passport':self.passport_file
+        }
+        response = self.client.post(self.url, data=data, multipart=True)
+
+        self.assertRedirects(response,reverse('accounts:profile'))
+        self.assertEqual(response.status_code,302)
