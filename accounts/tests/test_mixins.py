@@ -49,3 +49,32 @@ class TestLogoutRequiredMixin(TestCase):
         self.assertTemplateUsed(response,'accounts/register.html')
         self.assertEqual(response.status_code,200)
         
+class TestAccountVerifiedBeforeLoginMixin(TestCase):
+    def setUp(self):
+        self.url = reverse('accounts:login')
+        
+        self.data = {
+            'username':'test',
+            'password':'Test12345%'
+        }
+
+    def test_render_if_email_verified_False(self):
+        self.user = User.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=False,
+            password='Test12345%'
+        )
+        response = self.client.post(self.url, data=self.data)
+
+        self.assertTemplateUsed(response,'accounts/account_verified_message.html')
+        self.assertEqual(response.status_code,200)
+    
+    def test_redirect_if_email_verified_True(self):
+        self.user = User.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+        response = self.client.post(self.url, data=self.data)
+
+        self.assertEqual(response.status_code,302)
