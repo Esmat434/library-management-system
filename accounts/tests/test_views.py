@@ -240,3 +240,33 @@ class TestChangePasswordTokenView(TestCase):
 
         self.assertTemplateUsed(response,'accounts/change_password_token.html')
         self.assertEqual(response.status_code,200)
+
+class TestChangePasswordView(TestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(
+            username='test', email='test@gmail.com', avatar='', passport='', 
+            address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
+            password='Test12345%'
+        )
+
+        self.client.login(username='test', password='Test12345%')
+
+        self.token = ChangePasswordToken.objects.create(
+            user = self.user
+        )
+
+        self.url = reverse('accounts:change_password',args=[self.token.token])
+    
+    def test_get_change_password_view_validate(self):
+        response = self.client.get(self.url)
+        form = ChangePasswordForm()
+
+        self.assertTemplateUsed(response,'accounts/change_password.html')
+        self.assertEqual(response.status_code,200)
+
+        self.assertIn('token',response.context)
+        self.assertIn('form',response.context)
+        self.assertIsInstance(self.token,ChangePasswordToken)
+        self.assertIsInstance(form,ChangePasswordForm)
+        self.assertEqual(response.context['token'],self.token.token)
+        self.assertFalse(form.is_bound)
