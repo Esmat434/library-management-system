@@ -6,10 +6,17 @@ from accounts.models import AccountVerificationToken
 User = get_user_model()
 
 class TestAccountVerifiedTokenSignal(TestCase):
-    def test_account_verified_token_created_when_user_create(self):
-        user = User.objects.create_user(
+    def setUp(self):
+        self.user = User.objects.create_user(
             username='test', email='test@gmail.com', avatar='', passport='', 
             address='test', city='test', country='AF', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
-        self.assertTrue(AccountVerificationToken.objects.filter(user=user).exists())
+
+    def test_account_verified_token_created_when_user_create(self):
+        self.assertTrue(AccountVerificationToken.objects.filter(user=self.user).exists())
+    
+    def tearDown(self):
+        token =  AccountVerificationToken.objects.filter(user = self.user)
+        if token.exists():
+            token.delete()
