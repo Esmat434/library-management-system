@@ -55,7 +55,10 @@ class MaintenanceModeMiddleware(MiddlewareMixin):
         self.get_response = get_response
     
     def __call__(self, request):
-        if settings.MAINTENANCE_MODE:
+        if (
+            settings.MAINTENANCE_MODE
+            and (not request.user.is_authenticated or not request.user.is_superuser)
+        ):
             return render(request,'maintenance.html')
         response = self.get_response(request)
         return response
