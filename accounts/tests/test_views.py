@@ -64,7 +64,7 @@ class TestAcountVerifiedToken(TestCase):
             address='test', city='test', country='AF', birth_date='2020-01-02',password='Test12345%'
         )
 
-        self.token = AccountVerificationToken.objects.create(
+        self.token,self.created = AccountVerificationToken.objects.get_or_create(
             user = self.user
         )
 
