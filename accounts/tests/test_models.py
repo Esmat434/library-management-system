@@ -25,7 +25,7 @@ class TestAccountVerificationTokenModel(TestCase):
             password='Test12345%'
         )
         
-        self.token = AccountVerificationToken.objects.create(
+        self.token,self.created = AccountVerificationToken.objects.get_or_create(
             user = self.user
         )
     
