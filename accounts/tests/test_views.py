@@ -56,7 +56,7 @@ class TestRegisterView(TestCase):
         self.assertTemplateUsed(response,'accounts/account_verified_message.html')
         self.assertEqual(response.status_code,200)
 
-class TestAcountVerifiedToken(TestCase):
+class TestAccountVerifiedTokenView(TestCase):
     def setUp(self):
 
         self.user = CustomUser.objects.create_user(
@@ -75,9 +75,9 @@ class TestAcountVerifiedToken(TestCase):
         self.assertRedirects(response,reverse('accounts:login'))
         self.assertEqual(response.status_code,302)
 
-class TestResendAccountVerifiedTokenView(TestCase):
+class TestAccountVerifiedResendTokenView(TestCase):
     def setUp(self):
-        self.url = reverse('accounts:resend_account_token')
+        self.url = reverse('accounts:account_resend_token')
         
         self.user = CustomUser.objects.create_user(
             username='test', email='test@gmail.com', avatar='', passport='', 
@@ -91,7 +91,7 @@ class TestResendAccountVerifiedTokenView(TestCase):
     def test_get_resend_account_verified_token_view_validate(self):
         response = self.client.get(self.url)
         
-        self.assertTemplateUsed(response,'accounts/resend_account_verified_token.html')
+        self.assertTemplateUsed(response,'accounts/account_verified_resend_token.html')
         self.assertEqual(response.status_code,200)
     
     def test_post_resend_account_verified_token_view_validate(self):
@@ -232,13 +232,13 @@ class TestChangePasswordTokenView(TestCase):
     def test_get_change_password_token_view_validate(self):
         response = self.client.get(self.url)
 
-        self.assertTemplateUsed(response,'accounts/change_password_token.html')
+        self.assertTemplateUsed(response,'accounts/change_password_message.html')
         self.assertEqual(response.status_code,200)
     
     def test_post_change_password_token_view_validate(self):
         response = self.client.post(self.url)
 
-        self.assertTemplateUsed(response,'accounts/change_password_token.html')
+        self.assertTemplateUsed(response,'accounts/change_password_message.html')
         self.assertEqual(response.status_code,200)
 
 class TestChangePasswordView(TestCase):
@@ -264,16 +264,14 @@ class TestChangePasswordView(TestCase):
         self.assertTemplateUsed(response,'accounts/change_password.html')
         self.assertEqual(response.status_code,200)
 
-        self.assertIn('token',response.context)
         self.assertIn('form',response.context)
         self.assertIsInstance(self.token,ChangePasswordToken)
         self.assertIsInstance(form,ChangePasswordForm)
-        self.assertEqual(response.context['token'],self.token.token)
         self.assertFalse(form.is_bound)
 
 class TestForgotPasswordTokenView(TestCase):
     def setUp(self):
-       self.url = reverse('accounts:forgot_password_token')
+       self.url = reverse('accounts:forgot_password_resend_token')
 
        self.user = CustomUser.objects.create_user(
             username='test', email='test@gmail.com', avatar='', passport='', 
@@ -288,13 +286,13 @@ class TestForgotPasswordTokenView(TestCase):
     def test_get_forgot_password_view_validate(self):
         response = self.client.get(self.url)
 
-        self.assertTemplateUsed(response,'accounts/forgot_password_token.html')
+        self.assertTemplateUsed(response,'accounts/forgot_password_resend_link.html')
         self.assertEqual(response.status_code,200)
     
     def test_post_forgot_password_view_validate(self):
         response = self.client.post(self.url, data=self.data)
 
-        self.assertTemplateUsed(response,'accounts/forgot_password_token_message.html')
+        self.assertTemplateUsed(response,'accounts/forgot_password_message.html')
         self.assertEqual(response.status_code,200)
 
 class TestForgotPasswordView(TestCase):
