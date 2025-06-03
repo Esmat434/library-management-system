@@ -184,9 +184,9 @@ class ChangePasswordView(LoginRequiredMixin,View):
         except ChangePasswordToken.DoesNotExist:
             return None
 
-class ForgotPasswordTokenView(LogoutRequiredMixin,View):
+class ForgotPasswordResendLinkView(LogoutRequiredMixin,View):
     def get(self,request):
-        return render(request,'accounts/forgot_password_token.html')
+        return render(request,'accounts/forgot_password_resend_link.html')
     
     def post(self,request):
         new_token_val = uuid.uuid4()
@@ -203,7 +203,7 @@ class ForgotPasswordTokenView(LogoutRequiredMixin,View):
                 'expires_at':new_expiry_at
             }
         )
-        return render(request,'accounts/forgot_password_token_message.html')
+        return render(request,'accounts/forgot_password_message.html')
     
     def get_user(self,request):
         email = request.POST.get('email')
