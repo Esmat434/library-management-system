@@ -137,7 +137,7 @@ class ProfileUpdateView(LoginRequiredMixin,View):
 class ChangePasswordTokenView(LoginRequiredMixin,View):
     def get(self,request):
         ChangePasswordToken.objects.get_or_create(user = request.user)
-        return render(request,'accounts/change_password_token.html')
+        return render(request,'accounts/change_password_message.html')
     
     def post(self,request):
         new_token_val = uuid.uuid4()
@@ -149,7 +149,7 @@ class ChangePasswordTokenView(LoginRequiredMixin,View):
                 'expires_at':new_expiry_val
             }
         )
-        return render(request,'accounts/change_password_token.html')
+        return render(request,'accounts/change_password_message.html')
 
 class ChangePasswordView(LoginRequiredMixin,View):
     def get(self,request,token):
