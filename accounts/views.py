@@ -68,10 +68,10 @@ class AccountVerifiedTokenView(LogoutRequiredMixin,View):
         except ChangePasswordToken.DoesNotExist:
             return None
 
-class ResendAccountVerifiedTokenView(LogoutRequiredMixin,View):
+class AccountVerifiedResendTokenView(LogoutRequiredMixin,View):
     
     def get(self,request):
-        return render(request,'accounts/resend_account_verified_token.html')
+        return render(request,'accounts/account_verified_resend_token.html')
     
     def post(self,request):
         email = request.POST.get('email')
