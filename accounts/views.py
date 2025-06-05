@@ -156,7 +156,7 @@ class ChangePasswordView(LoginRequiredMixin,View):
         if not self.check_token(request,token):
             return HttpResponseNotFound("Token Does Not Exists.")
         form = ChangePasswordForm()
-        return render(request,'accounts/change_password.html',{'token':token,'form':form})
+        return render(request,'accounts/change_password.html',{'form':form})
     
     def post(self,request,token):
         token_val = self.check_token(request,token)
@@ -173,14 +173,14 @@ class ChangePasswordView(LoginRequiredMixin,View):
             return redirect('accounts:profile')
         else:
             messages.error(request,'Your password is incorrect.')
-            return render(request,'accounts/change_password.html',{'token':token})
+            return render(request,'accounts/change_password.html')
 
     def check_token(self,request,token):
         try:
             token_instance = ChangePasswordToken.objects.get(user = request.user,token = token)
             if hasattr(token_instance,'is_expired') and token_instance.is_expired():
                 return None
-            return token
+            return token_instance
         except ChangePasswordToken.DoesNotExist:
             return None
 
