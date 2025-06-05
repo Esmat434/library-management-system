@@ -1,0 +1,176 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.registration-container {
+    background-color: #ffffff;
+    /* White card background */
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    width: 100%;
+    max-width: 500px;
+    /* Max width for the form container */
+}
+
+.registration-container h2 {
+    color: #343a40;
+    /* Dark gray heading */
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    /* Rounded input fields */
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    /* Standard border */
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    /* Bootstrap focus color */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    /* Bootstrap primary blue */
+    border-color: #007bff;
+    border-radius: 0.5rem;
+    /* Rounded button */
+    padding: 0.75rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+    border-color: #0056b3;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+    /* Slightly lighter text for labels */
+}
+
+.text-muted a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.text-muted a:hover {
+    text-decoration: underline;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.logo-container img {
+    max-width: 100px;
+    /* Adjust as needed */
+    height: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .registration-container {
+        padding: 1.5rem;
+    }
+
+    .registration-container h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Styles for the Form Error Display Component */
+.form-errors-container {
+    background-color: #f8d7da;
+    /* Light red background for errors */
+    color: #721c24;
+    /* Dark red text color */
+    border: 1px solid #f5c6cb;
+    /* Red border */
+    border-radius: 0.5rem;
+    /* Rounded corners */
+    padding: 1rem 1.25rem;
+    /* Padding around the content */
+    margin-bottom: 1.5rem;
+    /* Space below the error box */
+    position: relative;
+    /* For positioning the close button */
+}
+
+.form-errors-container h5 {
+    color: #721c24;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.form-errors-container h5 .error-icon-title {
+    margin-right: 0.5rem;
+}
+
+.form-errors-list {
+    list-style: none;
+    /* Remove default bullet points */
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.form-errors-list li {
+    padding: 0.25rem 0;
+    /* Spacing between error messages */
+    display: flex;
+    align-items: flex-start;
+    /* Align icon with start of text */
+}
+
+.form-errors-list .error-icon {
+    margin-right: 0.6rem;
+    margin-top: 0.15rem;
+    /* Align icon slightly better with text */
+    color: #721c24;
+    /* Icon color */
+}
+
+.form-errors-list .error-text strong {
+    font-weight: 600;
+    /* Make field names bold */
+}
+
+.form-errors-close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #721c24;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.form-errors-close-btn:hover {
+    opacity: 1;
+}

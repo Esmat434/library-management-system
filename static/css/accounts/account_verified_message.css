@@ -1,0 +1,210 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+    text-align: center;
+}
+
+.confirmation-container {
+    background-color: #ffffff;
+    /* White card background */
+    padding: 2.5rem 3rem;
+    border-radius: 1rem;
+    /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    width: 100%;
+    max-width: 600px;
+    /* Max width for the container */
+}
+
+.confirmation-container h2 {
+    color: #28a745;
+    /* Success green color */
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.confirmation-container p {
+    color: #495057;
+    /* Slightly lighter text */
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.confirmation-container .email-address {
+    font-weight: 600;
+    color: #007bff;
+    /* Primary blue to highlight email */
+}
+
+.btn-primary-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary-custom:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.icon-container {
+    margin-bottom: 1.5rem;
+}
+
+.icon-container svg,
+.icon-container i {
+    width: 80px;
+    height: 80px;
+    font-size: 80px;
+    /* For Font Awesome */
+    color: #28a745;
+    /* Success green */
+}
+
+.text-muted-small {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .confirmation-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .confirmation-container h2 {
+        font-size: 1.75rem;
+    }
+
+    .confirmation-container p {
+        font-size: 1rem;
+    }
+
+    .btn-primary-custom {
+        width: 100%;
+    }
+}
+
+/* Django Messages Container */
+.django-messages-container-wrapper {
+    position: fixed;
+    /* Or absolute, depending on desired behavior */
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    /* Or adjust to match login card width */
+    z-index: 1055;
+    /* Above login card */
+    padding: 0 15px;
+}
+
+.django-message {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.9rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    /* Bootstrap's default rounded corners */
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.django-message .message-icon {
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
+    padding-top: 0.1rem;
+}
+
+.django-message .message-text {
+    flex-grow: 1;
+}
+
+.django-message .message-text strong {
+    font-weight: 600;
+}
+
+.django-message .message-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 0 0 0 1rem;
+}
+
+.django-message .message-close-btn:hover {
+    opacity: 1;
+}
+
+.django-message.message-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.django-message.message-success .message-icon,
+.django-message.message-success .message-close-btn {
+    color: #0f5132;
+}
+
+.django-message.message-info {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+}
+
+.django-message.message-info .message-icon,
+.django-message.message-info .message-close-btn {
+    color: #055160;
+}
+
+.django-message.message-warning {
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+}
+
+.django-message.message-warning .message-icon,
+.django-message.message-warning .message-close-btn {
+    color: #664d03;
+}
+
+.django-message.message-error {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+.django-message.message-error .message-icon,
+.django-message.message-error .message-close-btn {
+    color: #842029;
+}
+
+.django-message.message-debug {
+    color: #41464b;
+    background-color: #e2e3e5;
+    border-color: #d3d6d8;
+}
+
+.django-message.message-debug .message-icon,
+.django-message.message-debug .message-close-btn {
+    color: #41464b;
+}

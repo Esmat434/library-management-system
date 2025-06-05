@@ -1,0 +1,154 @@
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    /* Light gray background for the email client window */
+    font-family: 'Inter', Arial, sans-serif;
+    /* Inter as primary, Arial as fallback */
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 0;
+}
+
+img {
+    border: 0;
+    height: auto;
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+}
+
+/* Main content table */
+.content-table {
+    width: 100%;
+    max-width: 600px;
+    /* Standard width for email content */
+    margin: 0 auto;
+    background-color: #ffffff;
+    /* White background for content */
+    border-radius: 8px;
+    /* Rounded corners for the content block */
+    overflow: hidden;
+    /* Ensures border-radius is respected by inner elements */
+}
+
+/* Header */
+.header {
+    background-color: #007bff;
+    /* Primary blue */
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: 3px solid #0056b3;
+    /* Darker blue accent */
+}
+
+.header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.logo-placeholder {
+    /* If you have a logo image */
+    max-height: 50px;
+    margin-bottom: 10px;
+}
+
+/* Body content */
+.body-content {
+    padding: 30px 30px 20px 30px;
+    color: #343a40;
+    /* Dark gray text */
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.body-content p {
+    margin: 0 0 15px 0;
+}
+
+.body-content .name {
+    font-weight: bold;
+}
+
+/* Button */
+.button-container {
+    text-align: center;
+    padding: 10px 0 20px 0;
+}
+
+.button {
+    background-color: #28a745;
+    /* Green for primary action */
+    color: #ffffff !important;
+    /* Important to override link styles */
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    display: inline-block;
+    /* Allows padding and centering */
+    border: 1px solid #218838;
+    /* Slightly darker green border */
+}
+
+/* Fallback for clients that don't support border-radius on <a> tags well */
+.button-td {
+    background-color: #28a745;
+    border-radius: 5px;
+}
+
+
+/* Footer */
+.footer {
+    background-color: #e9ecef;
+    /* Light gray footer background */
+    padding: 20px 30px;
+    text-align: center;
+    color: #6c757d;
+    /* Muted text color */
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.footer a {
+    color: #007bff;
+    /* Blue links in footer */
+    text-decoration: none;
+}
+
+.footer p {
+    margin: 0 0 5px 0;
+}
+
+/* Responsive Styles (Limited support in some clients) */
+@media screen and (max-width: 600px) {
+    .content-table {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+    }
+
+    .header,
+    .body-content,
+    .footer {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .button {
+        width: 100% !important;
+        padding: 12px 0 !important;
+        /* Full width button on very small screens */
+    }
+}

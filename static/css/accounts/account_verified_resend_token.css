@@ -1,0 +1,112 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.resend-container {
+    background-color: #ffffff;
+    /* White card background */
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    width: 100%;
+    max-width: 500px;
+    /* Max width for the form container */
+    text-align: center;
+}
+
+.resend-container h2 {
+    color: #343a40;
+    /* Dark gray heading */
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.resend-container p {
+    color: #495057;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    text-align: left;
+    /* Align placeholder text left */
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+    display: block;
+    /* Make label block to allow text-align left */
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.btn-primary-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    width: 100%;
+    /* Full width button */
+    margin-top: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary-custom:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.icon-container {
+    margin-bottom: 1.5rem;
+}
+
+.icon-container i {
+    font-size: 50px;
+    color: #007bff;
+    /* Primary blue */
+}
+
+.links-container {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.links-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.links-container a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .resend-container {
+        padding: 1.5rem;
+    }
+
+    .resend-container h2 {
+        font-size: 1.75rem;
+    }
+}
