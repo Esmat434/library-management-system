@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Account - Library Management System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/accounts/account_verified_message.css' %}">
+</head>
+
+<body>
+    <!-- Django Messages Container - Positioned at the top -->
+    {% if messages %}
+    <div class="django-messages-container-wrapper">
+        {% for message in messages %}
+        <div class="django-message message-{{ message.tags }}" role="alert">
+            <span class="message-icon">
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} <i class="fas fa-check-circle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %} <i class="fas fa-info-circle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <i class="fas fa-exclamation-triangle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <i class="fas fa-times-circle"></i>
+                {% else %} <i class="fas fa-comment-dots"></i> {% endif %}
+            </span>
+            <span class="message-text">
+                {{ message|safe }}
+            </span>
+            <button type="button" class="message-close-btn" aria-label="Close"
+                onclick="this.parentElement.style.display='none';">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <!-- End Django Messages Container -->
+    <div class="confirmation-container">
+        <div class="icon-container">
+            <i class="fas fa-user-check"></i>
+        </div>
+        <h2>Account Created! Please Verify Your Email</h2>
+        <p>
+            Thank you for registering with the Library Management System!
+            We've sent a verification link to <strong id="userEmailPlaceholder"
+                class="email-address"></strong>.
+        </p>
+        <p>
+            Please click the link in that email to activate your account.
+            Remember to check your spam or junk folder if you don't see it in your inbox.
+        </p>
+        <p class="text-muted-small">
+            Didn't receive the verification email? <a href="{% url 'accounts:account_resend_token' %}" id="resendVerificationLink">Resend verification
+                email</a>.
+        </p>
+        <a href="login.html" class="btn btn-primary-custom">Go to Login Page</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

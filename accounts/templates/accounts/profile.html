@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Library Management System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/accounts/profile.css' %}">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-picture-container">
+                    <div class="profile-picture d-flex align-items-center justify-content-center">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" alt="" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-user fa-3x text-secondary"></i>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <h1 class="profile-name" id="userName">{{user.username}}</h1>
+                    <p class="profile-email" id="userEmail">{{user.email}}</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Personal Information</h2>
+            <dl class="row profile-details">
+                {% if user.username %}
+                    <dt class="col-sm-4 col-md-3"><i class="fas fa-thin fa-user mr-2 text-primary"></i>First Name:</dt>
+                    <dd class="col-sm-8 col-md-9" id="libraryCardId">{{user.first_name}}</dd>
+                {% endif %}
+                {% if user.username %}
+                    <dt class="col-sm-4 col-md-3"><i class="fas fa-thin fa-user mr-2 text-primary"></i>Last Name:</dt>
+                    <dd class="col-sm-8 col-md-9" id="libraryCardId">{{user.last_name}}</dd>
+                {% endif %}
+                {% if user.phone_number %}
+                    <dt class="col-sm-4 col-md-3"><i class="fas fa-phone-alt mr-2 text-primary"></i>Phone Number:</dt>
+                    <dd class="col-sm-8 col-md-9" id="phoneNumber">{{user.phone_number}}</dd>
+                {% endif %}
+
+                <dt class="col-sm-4 col-md-3"><i class="fas fa-map-marker-alt mr-2 text-primary"></i>Address:</dt>
+                <dd class="col-sm-8 col-md-9" id="userAddress">{{user.address}}</dd>
+
+                <dt class="col-sm-4 col-md-3"><i class="fas fa-solid fa-city mr-2 text-primary"></i>City:</dt>
+                <dd class="col-sm-8 col-md-9" id="userAddress">{{user.city}}</dd>
+
+                <dt class="col-sm-4 col-md-3"><i class="fas fa-solid fa-globe mr-2 text-primary"></i>Country:</dt>
+                <dd class="col-sm-8 col-md-9" id="userAddress">{{user.country}}</dd>
+            </dl>
+
+            <h2 class="section-title">Account Settings</h2>
+            <div class="profile-actions">
+                <a href="{% url 'accounts:profile_update' %}" class="btn btn-primary-custom"><i class="fas fa-edit mr-1"></i> Edit
+                    Profile</a>
+                <a href="{% url 'accounts:change_password_token' %}" class="btn btn-secondary-custom"><i class="fas fa-key mr-1"></i> Change
+                    Password</a>
+            </div>
+
+            <h2 class="section-title">Activity Overview</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-book fa-2x text-primary mb-2"></i>
+                            <h5 class="card-title">Books Borrowed</h5>
+                            <p class="card-text display-4 font-weight-bold" id="booksBorrowed">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-undo-alt fa-2x text-success mb-2"></i>
+                            <h5 class="card-title">Books Returned</h5>
+                            <p class="card-text display-4 font-weight-bold" id="booksReturned">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+                            <h5 class="card-title">Overdue Items</h5>
+                            <p class="card-text display-4 font-weight-bold" id="overdueItems">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/accounts/profile.js' %}"></script>
+</body>
+
+</html>
