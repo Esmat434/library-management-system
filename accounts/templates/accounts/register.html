@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Library Management System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/accounts/register.css' %}">
+</head>
+<body>
+    <div class="registration-container">
+        
+        {% if form.errors %}
+            <div class="form-errors-container" id="formErrorMessages">
+                <button type="button" class="form-errors-close-btn" aria-label="Close"
+                    onclick="this.parentElement.style.display='none';">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5><span class="error-icon-title"><i class="fas fa-exclamation-circle"></i></span>Please correct the errors below:
+                </h5>
+                <ul class="form-errors-list">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>
+                                <span class="error-icon"><i class="fas fa-times-circle"></i></span>
+                                <span class="error-text">
+                                    {{ error }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if form.non_field_errors %}
+            <div class="form-errors-container" id="formNonFieldErrors">
+                ...
+                <ul class="form-errors-list">
+                    {% for error in form.non_field_errors %}
+                        <li>... {{ error }} ...</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16" style="color: #007bff;">
+                <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388 1.17.953.713 1.04 1.764.999 2.931-.041 1.167-.486 2.291-1.212 3.021-.726.73-1.544 1.122-2.605 1.122C9.711 10.248 8.5 9.546 8.5 8V2.687zM7.5 8V2.687C7.5 2.016 7.016 1.5 6.346 1.5H2.5C1.673 1.5 1 2.173 1 3v10c0 .827.673 1.5 1.5 1.5h11c.827 0 1.5-.673 1.5-1.5V9.025c0-.512-.182-.983-.493-1.354C13.632 7.244 12.5 7 11.5 7c-.802 0-1.57.17-2.25.45A1.5 1.5 0 0 0 7.5 8.975V8zM2 3a.5.5 0 0 1 .5-.5h3.846C6.703 2.5 7 2.746 7 3.187V8a1 1 0 0 0-1 1v2.236c-.42-.118-.895-.235-1.408-.235C3.201 11 2.5 11.432 2.5 12.358V13a.5.5 0 0 1-.5-.5V3zm10.158 5.235c.34-.14.72-.235 1.133-.235.734 0 1.424.174 1.99.523V13a.5.5 0 0 1-.5.5H2.5a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h3.846v5.077c-.42.118-.895.235-1.408.235-.94 0-1.692.39-2.145.727V12.36c0 .351.27.636.608.636h7.866c.36 0 .642-.29.642-.646v-2.12z"/>
+            </svg>
+        </div>
+        <h2>Create Account</h2>
+        <form method="POST" id="registrationForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">User Name</label>
+                {{form.username}}
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name (Optional)</label>
+                {{form.first_name}}
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name (Optional)</label>
+                {{form.last_name}}
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                {{form.email}}
+            </div>
+
+            <div class="form-group">
+                <label for="avatar">Avatar</label>
+                {{form.avatar}}
+            </div>
+
+            <div class="form-group">
+                <label for="passport">Passport Avatar</label>
+                {{form.passport}}
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number (Optional)</label>
+                <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number">
+            </div>
+
+            <div class="form-group">
+                <label for="addr">Address</label>
+                {{form.address}}
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                {{form.city}}
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                {{form.country}}
+            </div>
+
+            <div class="form-group">
+                <label for="birth">Birth Date</label>
+                {{form.birth_date}}
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                {{form.password}}
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                {{form.password1}}
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                <label class="form-check-label" for="termsCheck">I agree to the <a href="#" data-toggle="modal" data-target="#termsModal">terms and conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+        <p class="text-center mt-3 text-muted">
+            Already have an account? <a href="{% url 'accounts:login' %}">Login here</a>
+        </p>
+    </div>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>1. Acceptance of Terms</strong></p>
+                    <p>By accessing and using the Library Management System ("Service"), you accept and agree to be bound by the terms and provision of this agreement. In addition, when using these particular services, you shall be subject to any posted guidelines or rules applicable to such services. Any participation in this service will constitute acceptance of this agreement.</p>
+                    
+                    <p><strong>2. User Registration</strong></p>
+                    <p>To use certain features of the Service, you may be required to register for an account. You agree to (a) provide true, accurate, current, and complete information about yourself as prompted by the Service's registration form and (b) maintain and promptly update the registration data to keep it true, accurate, current, and complete.</p>
+
+                    <p><strong>3. User Conduct</strong></p>
+                    <p>You are responsible for all activity that occurs under your account. You agree to abide by all applicable local, state, national, and international laws and regulations. You agree not to use the Service for any unlawful purpose or in any way that might harm, damage, or disparage any other party.</p>
+
+                    <p><strong>4. Library Materials</strong></p>
+                    <p>Users are responsible for the timely return of all borrowed materials. Fines may be assessed for overdue, damaged, or lost items in accordance with the library's policies.</p>
+
+                    <p><strong>5. Privacy Policy</strong></p>
+                    <p>Our Privacy Policy, which sets out how we will use your information, can be found at [Link to Privacy Policy]. By using this Service, you consent to the processing described therein and warrant that all data provided by you is accurate.</p>
+
+                    <p><strong>6. Modifications to Service</strong></p>
+                    <p>The Library reserves the right at any time and from time to time to modify or discontinue, temporarily or permanently, the Service (or any part thereof) with or without notice. You agree that the Library shall not be liable to you or to any third party for any modification, suspension, or discontinuance of the Service.</p>
+
+                    <p><strong>7. Termination</strong></p>
+                    <p>The Library may terminate or suspend your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+                    
+                    <p><em>Last updated: [Date]</em></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

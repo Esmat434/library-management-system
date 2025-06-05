@@ -1,0 +1,154 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    /* padding-top: 70px; */
+    /* Adjust if using a fixed navbar */
+}
+
+.edit-profile-container {
+    background-color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    /* Max width for the form container */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.edit-profile-container h2 {
+    color: #343a40;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.75rem;
+    display: inline-block;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    /* Spacing between buttons if they wrap */
+}
+
+.btn-primary-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.btn-primary-custom:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary-custom {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.profile-picture-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-picture-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #dee2e6;
+    background-color: #e9ecef;
+    /* Placeholder background */
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-file-input~.custom-file-label::after {
+    content: "Browse";
+    /* Change browse button text */
+}
+
+/* Navbar styling (example, if you have one) */
+.navbar-custom {
+    background-color: #343a40 !important;
+    border-bottom: 3px solid #007bff;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: #f8f9fa !important;
+    font-weight: 500;
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .nav-link:hover {
+    color: #adb5bd !important;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    text-align: right;
+    /* Align buttons to the right */
+}
+
+.form-actions .btn {
+    margin-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .edit-profile-container {
+        padding: 1.5rem;
+    }
+
+    .profile-picture-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-picture-preview {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+}

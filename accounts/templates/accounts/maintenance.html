@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Under Maintenance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+            /* Light, calming background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .maintenance-container {
+            background-color: #ffffff;
+            padding: 30px 40px 40px 40px;
+            /* More padding at the bottom */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .maintenance-icon {
+            font-size: 4rem;
+            /* Larger icon */
+            color: #007bff;
+            /* Primary accent color */
+            margin-bottom: 20px;
+            animation: spin 8s linear infinite;
+            /* Subtle animation */
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+        
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            /* Darker heading color */
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar-container {
+            width: 80%;
+            margin: 0 auto 30px auto;
+            background-color: #e9ecef;
+            border-radius: 25px;
+            height: 10px;
+            /* Slimmer progress bar */
+            overflow: hidden;
+            /* To make inner bar rounded */
+        }
+
+        .progress-bar-fill {
+            width: 60%;
+            /* Example progress */
+            height: 100%;
+            background: linear-gradient(90deg, #007bff 0%, #00bfff 100%);
+            /* Gradient fill */
+            border-radius: 25px;
+            animation: progressBarAnimation 2s ease-out forwards;
+        }
+
+        @keyframes progressBarAnimation {
+            from {
+                width: 0%;
+            }
+        
+            to {
+                width: 60%;
+            }
+        
+            /* Adjust to match .progress-bar-fill width */
+        }
+
+        .eta-message {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .contact-info a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            color: #007bff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #0056b3;
+            /* Darker shade on hover */
+        }
+
+        /* Optional: Subscription form */
+        .subscribe-form {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subscribe-form input[type="email"] {
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .subscribe-form input[type="email"]:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+        .subscribe-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .subscribe-form .feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+            width: 100%;
+            display: block;
+        }
+
+        .subscribe-form .feedback.success {
+            color: green;
+        }
+
+        .subscribe-form .feedback.error {
+            color: red;
+        }
+
+
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 25px 20px 30px 20px;
+            }
+        
+            h1 {
+                font-size: 1.8rem;
+            }
+        
+            p {
+                font-size: 1rem;
+            }
+        
+            .maintenance-icon {
+                font-size: 3.5rem;
+            }
+        
+            .subscribe-form {
+                flex-direction: column;
+            }
+        
+            .subscribe-form input[type="email"] {
+                width: 100%;
+                max-width: none;
+                margin-bottom: 10px;
+            }
+        
+            .subscribe-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="maintenance-container">
+        <div class="maintenance-icon">
+    <i class="fas fa-cogs"></i> <!-- You can also use fa-tools, fa-sync-alt, etc. -->
+    </div>
+        <h1>Site Under Maintenance</h1>
+        <p>We're currently performing scheduled maintenance to improve our services. We apologize for any inconvenience
+            this may cause.</p>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <p class="eta-message">We expect to be back online shortly. Thanks for your patience!</p>
+        Optional: Estimated time back
+        <p class="eta-message">Estimated time back: <strong>11:30 PM EDT</strong></p>
+       
+
+        <div class="social-links">
+            <!-- Replace # with your actual social media links -->
+            <a href="#" aria-label="Our Facebook Page"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Our Twitter Profile"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Our Instagram Profile"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <div class="contact-info">
+            <p>If you need to reach us urgently, please <a href="mailto:support@yourlibrary.com">contact support</a>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('subscribeForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('subscribeEmail');
+            const feedbackEl = document.getElementById('subscribeFeedback');
+            const email = emailInput.value.trim();
+
+            feedbackEl.textContent = ''; // Clear previous feedback
+            feedbackEl.className = 'feedback'; // Reset class
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                feedbackEl.textContent = 'Please enter a valid email address.';
+                feedbackEl.classList.add('error');
+                return;
+            }
+
+            // Simulate API call
+            console.log('Subscribing email:', email);
+            feedbackEl.textContent = 'Thank you! We will notify you once we are back online.';
+            feedbackEl.classList.add('success');
+            emailInput.value = ''; // Clear input
+
+            // In a real scenario, you would make an AJAX call here to your backend
+            fetch('/api/subscribe-maintenance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    feedbackEl.textContent = 'Thank you! We will notify you.';
+                    feedbackEl.classList.add('success');
+                    emailInput.value = '';
+                } else {
+                    feedbackEl.textContent = data.message || 'Subscription failed. Please try again.';
+                    feedbackEl.classList.add('error');
+                }
+            })
+            .catch(error => {
+                console.error('Subscription error:', error);
+                feedbackEl.textContent = 'An error occurred. Please try again.';
+                feedbackEl.classList.add('error');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
