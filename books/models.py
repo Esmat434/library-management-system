@@ -1,3 +1,20 @@
 from django.db import models
 
 # Create your models here.
+
+class Book(models.Model):
+    author = models.ForeignKey('Author', on_delete=models.PROTECT)
+    publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT)
+    
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    isbn = models.CharField(max_length=13,unique=True)
+    
+    total_copies = models.IntegerField(default=0)
+    available_copies  = models.IntegerField(default=0)
+    
+    published_date = models.DateField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
