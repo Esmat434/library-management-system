@@ -45,3 +45,7 @@ class BaseInfo(models.Model):
 
 class Author(BaseInfo):
     ...
+ 
+class Publisher(BaseInfo):
+    ...
+    
