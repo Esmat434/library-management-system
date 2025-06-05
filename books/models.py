@@ -29,3 +29,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+class Author(models.Model):
+    username = models.CharField(max_length=155)
+    email = models.EmailField()
+    first_name = models.CharField(max_length=155,blank=True)
+    last_name = models.CharField(max_length=155,blank=True)
+    age = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.username
+    
