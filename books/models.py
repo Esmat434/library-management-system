@@ -18,3 +18,11 @@ class Book(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Category(models.Model):
+    name = models.CharField(max_length=155)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+    
