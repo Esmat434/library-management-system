@@ -21,7 +21,7 @@ class UserForm(forms.ModelForm):
         model = CustomUser
         fields = (
             'username','email','first_name','last_name','avatar','passport','phone_number',
-            'city','country','birth_date','password','password1'
+            'address','city','country','birth_date','password','password1'
         )
         widgets = {
             'username': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Enter User Name'}),
@@ -102,7 +102,7 @@ class UserUpdateForm(forms.ModelForm):
         model = CustomUser
         fields = (
             'username','email','first_name','last_name','avatar','passport','phone_number',
-            'city','country','birth_date'
+            'address','city','country','birth_date'
         )
         widgets = {
             'username': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Enter User Name'}),
