@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import sys
 from pathlib import Path
 import os
 from decouple import config
@@ -165,3 +165,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 AXES_FAILURE_LIMIT = 5  
 AXES_COOLOFF_TIME = timedelta(minutes=15) 
+AXES_ENABLED = True
+
+# test part
+# When test is running the Axes will off
+if 'test' in sys.argv:
+    AXES_ENABLED = False
