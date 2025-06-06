@@ -91,3 +91,16 @@ class BorrowTransaction(models.Model):
     def __str__(self):
         return f"borrow {self.book_copy.book.title} to {self.user.username}"
     
+class Reservation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    is_active = models.BooleanField(default=False)
+    reservation_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user','book'],name='unique_reservation')
+        ]
+    
+    def __str__(self):
+        return f"{self.user.username} reserved {self.book.title}"
