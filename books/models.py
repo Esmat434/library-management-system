@@ -65,7 +65,11 @@ class BookCopy(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('book','copy_number')
+        constraints = [
+            models.UniqueConstraint(fields=['book','copy_number'],name='unique_book_copy'),
+            models.CheckConstraint(check=models.Q(copy_number__gte=0),name='copy_number_non_negative')
+        ]
 
     def __str__(self):
         return f"copy from {self.book.title}"
+    
