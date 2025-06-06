@@ -48,4 +48,24 @@ class Author(BaseInfo):
  
 class Publisher(BaseInfo):
     ...
-    
+
+class BookCopy(models.Model):
+    Book_Status = (
+        ('available', 'Available'),
+        ('borrowed', 'Borrowed'),
+        ('reserved', 'Reserved'),
+        ('lost', 'Lost')
+    )
+
+    book = models.ForeignKey(Book,on_delete=models.PROTECT)
+    copy_number = models.IntegerField(default=0)
+    status = models.CharField(max_length=20,choices=Book_Status,default='available')
+    location = models.CharField(max_length=155)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('book','copy_number')
+
+    def __str__(self):
+        return f"copy from {self.book.title}"
