@@ -103,3 +103,15 @@ class Reservation(models.Model):
     
     def __str__(self):
         return f"{self.user.username} reserved {self.book.title}"
+
+class Fine(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    borrow_transaction = models.ForeignKey(BorrowTransaction, on_delete=models.PROTECT)
+    amount = models.DecimalField(max_digits=8,decimal_places=2)
+    ia_paid = models.BooleanField(default=False)
+    payment_date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user','borrow_transaction'],name='unique_fine')
+        ]
