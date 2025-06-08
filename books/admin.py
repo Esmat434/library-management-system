@@ -31,3 +31,10 @@ class PublisherAdmin(admin.ModelAdmin):
     list_filter = ['first_name','last_name','age','address']
     search_fields = ['id','username','email']
     ordering = ['id']
+
+@admin.register(BookCopy)
+class BookCopyAdmin(admin.ModelAdmin):
+    list_display = ['id','book','copy_number','status','location','created_at']
+    list_filter = ['status','location']
+    search_fields = ['id','copy_number']
+    ordering = ['id']
