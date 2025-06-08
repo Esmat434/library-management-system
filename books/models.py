@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Book(models.Model):
-    author = models.ForeignKey('Author', on_delete=models.PROTECT)
-    publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT)
+    author = models.ForeignKey('Author', on_delete=models.PROTECT,related_name='author')
+    publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT,related_name='publisher')
+    category = models.ForeignKey('Category', on_delete=models.PROTECT,related_name='category')
     
     title = models.CharField(max_length=150,unique=True)
     description = models.TextField()
@@ -61,7 +61,7 @@ class BookCopy(models.Model):
         ('lost', 'Lost')
     )
 
-    book = models.ForeignKey(Book,on_delete=models.PROTECT)
+    book = models.ForeignKey(Book,on_delete=models.PROTECT,related_name='book')
     copy_number = models.IntegerField(default=0)
     status = models.CharField(max_length=20,choices=Book_Status,default='available')
     location = models.CharField(max_length=155)
@@ -78,8 +78,8 @@ class BookCopy(models.Model):
         return f"copy from {self.book.title}"
     
 class BorrowTransaction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    book_copy = models.ForeignKey(BookCopy, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT,related_name='user')
+    book_copy = models.ForeignKey(BookCopy, on_delete=models.PROTECT,related_name='book_copy')
     fine_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     is_returned = models.BooleanField(default=False)
     due_date = models.DateField()
@@ -94,8 +94,8 @@ class BorrowTransaction(models.Model):
         return f"borrow {self.book_copy.book.title} to {self.user.username}"
     
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    book = models.ForeignKey(Book, on_delete=models.PROTECT, related_name='book')
     is_active = models.BooleanField(default=False)
     reservation_date = models.DateTimeField(auto_now_add=True)
 
@@ -108,8 +108,8 @@ class Reservation(models.Model):
         return f"{self.user.username} reserved {self.book.title}"
 
 class Fine(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    borrow_transaction = models.ForeignKey(BorrowTransaction, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user')
+    borrow_transaction = models.ForeignKey(BorrowTransaction, on_delete=models.PROTECT, related_name='borrow_transaction')
     amount = models.DecimalField(max_digits=8,decimal_places=2)
     is_paid = models.BooleanField(default=False)
     payment_date = models.DateField(auto_now_add=True)
