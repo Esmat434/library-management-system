@@ -9,7 +9,7 @@ class Book(models.Model):
     publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT)
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
     
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150,unique=True)
     description = models.TextField()
     isbn = models.CharField(max_length=13,unique=True)
     slug = models.CharField(max_length=150,unique=True)
