@@ -32,8 +32,8 @@ class Category(models.Model):
         return self.name
     
 class BaseInfo(models.Model):
-    username = models.CharField(max_length=155)
-    email = models.EmailField()
+    username = models.CharField(max_length=155,unique=True)
+    email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=155,blank=True)
     last_name = models.CharField(max_length=155,blank=True)
     age = models.PositiveIntegerField(default=0)
