@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     # third party apps
     'axes',
     # myapp
-    'accounts'
+    'accounts',
+    'books',
 ]
 
 MIDDLEWARE = [
