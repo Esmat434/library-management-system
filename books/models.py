@@ -60,7 +60,7 @@ class BookCopy(models.Model):
     )
 
     book = models.ForeignKey(Book,on_delete=models.PROTECT)
-    copy_number = models.IntegerField(default=0)
+    copy_number = models.IntegerField(default=0,unique=True)
     status = models.CharField(max_length=20,choices=Book_Status,default='available')
     location = models.CharField(max_length=155)
     created_at = models.DateTimeField(auto_now_add=True)
