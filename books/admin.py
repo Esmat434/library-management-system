@@ -11,3 +11,9 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ['category','author','publisher']
     search_fields = ['id','title','isbn']
     ordering = ['-id']
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id','name']
+    search_fields = ['id','name']
+    ordering = ['id']
