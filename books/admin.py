@@ -17,3 +17,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id','name']
     search_fields = ['id','name']
     ordering = ['id']
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ['id','username','email','first_name','last_name','age','address']
+    list_filter = ['first_name','last_name','age','address']
+    search_fields = ['id','username','email']
+    ordering = ['id']
