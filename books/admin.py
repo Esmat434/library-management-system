@@ -38,3 +38,10 @@ class BookCopyAdmin(admin.ModelAdmin):
     list_filter = ['status','location']
     search_fields = ['id','copy_number']
     ordering = ['id']
+
+@admin.register(BorrowTransaction)
+class BorrowTransactionAdmin(admin.ModelAdmin):
+    list_display = ['id','user','book_copy','is_returned','due_date','return_date']
+    list_filter = ['is_returned']
+    search_fields = ['id']
+    ordering = ['id']
