@@ -24,3 +24,10 @@ class AuthorAdmin(admin.ModelAdmin):
     list_filter = ['first_name','last_name','age','address']
     search_fields = ['id','username','email']
     ordering = ['id']
+
+@admin.register(Publisher)
+class PublisherAdmin(admin.ModelAdmin):
+    list_display = ['id','username','email','first_name','last_name','age','address']
+    list_filter = ['first_name','last_name','age','address']
+    search_fields = ['id','username','email']
+    ordering = ['id']
