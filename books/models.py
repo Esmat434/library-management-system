@@ -12,6 +12,7 @@ class Book(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
     isbn = models.CharField(max_length=13,unique=True)
+    slug = models.CharField(max_length=150,unique=True)
     avatar = models.ImageField(upload_to='book/')
     
     total_copies = models.IntegerField(default=0)
