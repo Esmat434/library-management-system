@@ -52,3 +52,10 @@ class ReservationAdmin(admin.ModelAdmin):
     list_filter = ['is_active','reservation_date']
     search_fields = ['id']
     ordering = ['id']
+
+@admin.register(Fine)
+class FineAdmin(admin.ModelAdmin):
+    list_display = ['id','user','borrow_transaction','amount','is_paid','payment_date']
+    list_filter = ['is_paid','payment_date']
+    search_fields = ['id']
+    ordering = ['id']
