@@ -48,7 +48,7 @@ class BorrowTransactionAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ['id','user','book','is_active','reservation_date']
+    list_display = ['id','user','book_copy','is_active','reservation_date']
     list_filter = ['is_active','reservation_date']
     search_fields = ['id']
     ordering = ['id']
