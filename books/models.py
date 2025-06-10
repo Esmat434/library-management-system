@@ -95,17 +95,17 @@ class BorrowTransaction(models.Model):
     
 class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservation')
-    book = models.ForeignKey(Book, on_delete=models.PROTECT, related_name='reservation')
+    book_copy = models.ForeignKey(BookCopy, on_delete=models.PROTECT, related_name='reservation')
     is_active = models.BooleanField(default=False)
     reservation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user','book'],name='unique_reservation')
+            models.UniqueConstraint(fields=['user','book_copy'],name='unique_reservation')
         ]
     
     def __str__(self):
-        return f"{self.user.username} reserved {self.book.title}"
+        return f"{self.user.username} reserved {self.book_copy.book.title}"
 
 class Fine(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='fine')
