@@ -19,7 +19,7 @@ urlpatterns = [
     path('books/filter/publisher/',BookFilterByPublisher.as_view(),name='book_filter_by_publisher'),
     
     # Borrow Transaction
-    path('borrow',BorrowTransactionListView.as_view(),name='borrow_transaction_list'),
+    path('borrow/',BorrowTransactionListView.as_view(),name='borrow_transaction_list'),
     path('borrow/<slug:slug>/',BorrowTransactionCreateView.as_view(),name='borrow_transaction_create'),
     
     # Reservations
