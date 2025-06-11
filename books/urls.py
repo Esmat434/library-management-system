@@ -6,6 +6,8 @@ from .views import (
     ReturnBorrowView
 )
 
+app_name = 'books'
+
 urlpatterns = [
     # Book Views
     path('books/',BookListView.as_view(),name='home'),
