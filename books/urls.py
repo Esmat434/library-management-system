@@ -1,9 +1,9 @@
 from django.urls import path
 
 from .views import (
-    BookListView,BookDetailView,BookFilterByAuthor,BookFilterByCategory,BookFilterByPublisher,
-    BorrowTransactionListView,BorrowTransactionCreateView,ReservedListView,ReservationCreateView,
-    ReturnBorrowView
+    BookListView,BookDetailView,BookFilterByAuthorView,BookFilterByCategoryView,
+    BookFilterByPublisherView,BorrowTransactionListView,BorrowTransactionCreateView,ReservedListView,
+    ReservationCreateView,ReturnBorrowView
 )
 
 app_name = 'books'
@@ -14,9 +14,9 @@ urlpatterns = [
     path('books/<slug:slug>/',BookDetailView.as_view(),name='book_detail'),
     
     # Filters
-    path('books/filter/author/',BookFilterByAuthor.as_view(),name='book_filter_by_author'),
-    path('books/filter/category/',BookFilterByCategory.as_view(),name='book_filter_by_category'),
-    path('books/filter/publisher/',BookFilterByPublisher.as_view(),name='book_filter_by_publisher'),
+    path('books/filter/author/',BookFilterByAuthorView.as_view(),name='book_filter_by_author'),
+    path('books/filter/category/',BookFilterByCategoryView.as_view(),name='book_filter_by_category'),
+    path('books/filter/publisher/',BookFilterByPublisherView.as_view(),name='book_filter_by_publisher'),
     
     # Borrow Transaction
     path('borrow/',BorrowTransactionListView.as_view(),name='borrow_transaction_list'),
