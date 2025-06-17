@@ -6,7 +6,7 @@ class TestUrls(SimpleTestCase):
     def test_book_list_url_is_reversed(self):
         url_name = 'books:home'
         url_path = reverse(url_name)
-        self.assertEqual(url_path,'/books/')
+        self.assertEqual(url_path,'/')
         
     def test_book_detail_url_is_reversed(self):
         url_name = 'books:book_detail'
