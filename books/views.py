@@ -3,6 +3,7 @@ from django.http import HttpResponseNotFound,HttpResponseBadRequest
 from django.views import View
 from django.contrib import messages
 from django.db import transaction
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.utils.timezone import now
 from datetime import timedelta
 
@@ -17,8 +18,24 @@ from .models import (
 
 class BookListView(View):
     def get(self,request):
-        books = Book.objects.all()
+        books = self.get_paginator(request)
         return render(request,'books/book_list.html',{'books':books})
+
+    def get_paginator(self,request):
+        books = Book.objects.select_related('author','publisher','category').all()
+        
+        paginator = Paginator(books,10)
+
+        page_number = request.GET.get('page')
+
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+        
+        return page_obj
 
 class BookDetailView(View):
     def get(self,request,slug):
@@ -27,23 +44,23 @@ class BookDetailView(View):
         return render(request,'books/book_detail.html',{'book':book,'book_copy':book_copy})
 
 # Helper Function For Filtering
-def filter_books_by(request,model,attr_name,tamplate_name='books/book_list.html'):
-    query = request.GET.get('q','')
+def filter_books_by(request,model,filter_name,attr_name,tamplate_name='books/book_list.html'):
+    query = request.GET.get(filter_name,'')
     obj = get_object_or_404(model,**{attr_name:query})
     books = obj.books.all()
     return render(request,tamplate_name,{'books':books})
 
 class BookFilterByCategoryView(View):
     def get(self,request):
-        return filter_books_by(request,Category,'name')
+        return filter_books_by(request,Category,'category','name')
 
 class BookFilterByAuthorView(View):
     def get(self,request):
-        return filter_books_by(request,Author,'username')
+        return filter_books_by(request,Author,'author','username')
         
 class BookFilterByPublisherView(View):
     def get(self,request):
-        return filter_books_by(request,Publisher,'username')
+        return filter_books_by(request,Publisher,'publisher','username')
 
 class BorrowTransactionListView(LoginRequiredMixin,View):
     def get(self,request):
