@@ -10,7 +10,7 @@ app_name = 'books'
 
 urlpatterns = [
     # Book Views
-    path('books/',BookListView.as_view(),name='home'),
+    path('',BookListView.as_view(),name='home'),
     path('books/<slug:slug>/',BookDetailView.as_view(),name='book_detail'),
     
     # Filters
