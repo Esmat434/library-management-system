@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Book Collection | Library Management System</title>
+
+    <!-- Bootstrap 5 CSS for Grid System and basic components -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            /* Tailwind's gray-50 */
+        }
+
+        /* Custom styling for a smooth transition on book cards */
+        .book-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* Style for availability badges */
+        .status-available {
+            background-color: #dcfce7;
+            /* green-100 */
+            color: #166534;
+            /* green-800 */
+        }
+
+        .status-checked-out {
+            background-color: #fee2e2;
+            /* red-100 */
+            color: #991b1b;
+            /* red-800 */
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky-top">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-book-open text-2xl text-indigo-600"></i>
+                    <a href="#" class="text-2xl font-bold text-gray-800">LibrarySys</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'books:home' %}" class="text-gray-600 hover:text-indigo-600">Home</a>
+                    <a href="{% url 'books:borrow_transaction_list' %}" class="text-gray-600 hover:text-indigo-600">Borrows</a>
+                    <a href="{% url 'books:reserved_list' %}" class="text-gray-600 hover:text-indigo-600">Reserveds</a>
+                    <a href="{% url 'core:about_us' %}" class="text-gray-600 hover:text-indigo-600">About Us</a>
+                    <a href="{% url 'core:contact_us' %}" class="text-gray-600 hover:text-indigo-600">Contact Us</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-indigo-600 md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    {% if not request.user.is_authenticated %}
+                        <a href="{% url 'accounts:login' %}"
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Login</a>
+                        <a href="{% url 'accounts:register' %}"
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Register</a>
+                    {% else %}
+                        {% if request.user.role == 'admin' or request.user.role == 'librarian' %}
+                            <a href="{% url 'dashboard:dashboard' %}"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Dashboard</a>
+                            <a href="{% url 'accounts:profile' %}"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Profile</a>
+                        {% else %}
+                            <a href="{% url 'accounts:profile' %}"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">profile</a>
+                                <a href="{% url 'accounts:logout' %}"
+                                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Logout</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden pb-4" id="mobile-menu">
+                <a href="{% url 'books:home' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Home</a>
+                <a href="{% url 'books:borrow_transaction_list' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Borrows</a>
+                <a href="{% url 'books:reserved_list' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Reserveds</a>
+                <a href="{% url 'core:about_us' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">About Us</a>
+                <a href="{% url 'core:contact_us' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <!-- Page Header -->
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Our Book Collection</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Discover worlds of adventure, knowledge, and wonder.
+                Browse our collection and find your next great read.</p>
+        </header>
+
+        <!-- Filter and Search Section (Corrected with Separate Forms) -->
+        <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm mb-8 sticky-top" style="top: 80px;">
+            <div class="row g-3 align-items-center">
+            
+                <!-- Search Form -->
+                <div class="col-12 col-lg-6">
+                    <form action="{% url 'books:book_search' %}" method="GET" class="d-flex">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </span>
+                            <input type="text" name="q" class="form-control border-start-0"
+                                placeholder="Search by title, author...">
+                            <button type="submit" class="btn btn-outline-secondary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <!-- Filter by Genre Form -->
+                <div class="col-md-4 col-lg-2">
+                    <form method="GET" action="{% url 'books:book_filter_by_category' %}">
+                        <select name="category" class="form-select" onchange="this.form.submit()" title="Filter by Genre">
+                            <option value="">All Genres</option>
+                            {% for category in categories %}
+                                <option value="{{ category.name }}">
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            
+                <!-- Filter By Author Form -->
+                <div class="col-md-4 col-lg-2">
+                    <form method="GET" action="{% url 'books:book_filter_by_author' %}">
+                        <select name="author" class="form-select" onchange="this.form.submit()" title="Filter by Author">
+                            <option value="">All Authors</option>
+                            {% for author in authors %}
+                                <option value="{{ author.username }}">
+                                    {{ author.username }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            
+                <!-- Filter By Publisher Form -->
+                <div class="col-md-4 col-lg-2">
+                    <form method="GET" action="{% url 'books:book_filter_by_publisher' %}">
+                        <select name="publisher" class="form-select" onchange="this.form.submit()" title="Filter by Publisher">
+                            <option value="">All Publishers</option>
+                            {% for publisher in publishers %}
+                                <option value="{{ publisher.username }}">
+                                    {{ publisher.username }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+
+        {% if books %}
+            <!-- Book List Grid -->
+            <div id="book-list" class="row g-4">
+                {% for book in books %}
+                    <!-- Book Card 1 -->
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-3 book-item" data-genre="Fiction" data-title="The Great Gatsby"
+                        data-author="F. Scott Fitzgerald">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-lg h-100 flex flex-col book-card">
+                            <img class="w-full h-56 object-cover"
+                                src="{{book.avatar.url}}" alt="Book Cover">
+                            <div class="p-5 flex flex-col flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-sm bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">{{book.category.name}}</p>
+                                </div>
+                                <h3 class="font-bold text-xl my-2 text-gray-900">{{book.title}}</h3>
+                                <p class="text-gray-600 text-sm mb-4">{{book.author.username}}</p>
+                                <p class="text-gray-700 text-sm flex-grow">{{book.description|truncatechars:20}}</p>
+                                <a href="{% url 'books:book_detail' book.slug %}"><button
+                                    class="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">View
+                                    Details</button></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden col-12 text-center py-16">
+                    <i class="fas fa-book-dead text-6xl text-gray-300"></i>
+                    <h3 class="mt-4 text-2xl font-semibold text-gray-700">No Books Found</h3>
+                    <p class="text-gray-500 mt-2">Try adjusting your search or filter criteria.</p>
+                </div>
+            </div>
+
+            {% comment %} فقط در صورتی که بیش از یک صفحه وجود داشته باشد، این بخش را نمایش بده {% endcomment %}
+            {% if books.has_other_pages %}
+                <ul class="pagination justify-content-center">
+                
+                    {% comment %} دکمه "صفحه قبلی" {% endcomment %}
+                    {% if books.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ books.previous_page_number }}" tabindex="-1"
+                                aria-disabled="false">Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                    {% endif %}
+                    
+                    {% comment %} نمایش شماره صفحات {% endcomment %}
+                    {% for num in books.paginator.page_range %}
+                        {% if books.number == num %}
+                            {% comment %} صفحه فعلی را به صورت فعال (active) نشان بده {% endcomment %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > books.number|add:'-3' and num < books.number|add:'3' %} {% comment %} فقط شماره صفحات نزدیک به
+                            صفحه فعلی را نمایش بده (برای جلوگیری از شلوغی) {% endcomment %} <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                        
+                    {% comment %} دکمه "صفحه بعدی" {% endcomment %}
+                    {% if books.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ books.next_page_number }}">Next</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    {% endif %}
+                    
+                </ul>
+            {% endif %}
+            </nav>
+            {% comment %} (اختیاری) نمایش وضعیت فعلی صفحه {% endcomment %}
+            <div class="text-center mt-2">
+                <p class="text-muted">
+                    صفحه {{ books.number }} {{ books.paginator.num_pages }}
+                </p>
+            </div>
+        {% else %}
+            <div id="no-results-card" class="text-center bg-white p-8 md:p-12 rounded-xl shadow-sm">
+
+                <!-- Icon -->
+                <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-slate-100">
+                    <i class="fas fa-book-dead text-4xl text-slate-400"></i>
+                </div>
+                <!-- Heading -->
+                <h3 class="mt-6 text-2xl font-bold text-slate-800">No Books Found</h3>
+                <!-- Informative Text -->
+                <p class="mt-2 text-md text-slate-500 max-w-md mx-auto">
+                    We couldn't find any books matching your search or filter criteria. Please try again with different
+                    keywords.
+                </p>
+            </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-6 text-center">
+            <p>&copy; 2025 Library Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript for Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const genreFilter = document.getElementById('genreFilter');
+            const bookItems = document.querySelectorAll('.book-item');
+            const noResultsMessage = document.getElementById('no-results');
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Search and Filter Logic ---
+            function filterAndSearchBooks() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedGenre = genreFilter.value;
+                let visibleBooks = 0;
+
+                bookItems.forEach(function (book) {
+                    const title = book.dataset.title.toLowerCase();
+                    const author = book.dataset.author.toLowerCase();
+                    const genre = book.dataset.genre;
+
+                    const matchesSearch = title.includes(searchTerm) || author.includes(searchTerm);
+                    const matchesGenre = selectedGenre === 'all' || genre === selectedGenre;
+
+                    if (matchesSearch && matchesGenre) {
+                        book.style.display = 'block';
+                        visibleBooks++;
+                    } else {
+                        book.style.display = 'none';
+                    }
+                });
+
+                // Show or hide the "No Results" message
+                if (visibleBooks === 0) {
+                    noResultsMessage.classList.remove('hidden');
+                } else {
+                    noResultsMessage.classList.add('hidden');
+                }
+            }
+
+            searchInput.addEventListener('keyup', filterAndSearchBooks);
+            genreFilter.addEventListener('change', filterAndSearchBooks);
+        });
+    </script>
+</body>
+
+</html>

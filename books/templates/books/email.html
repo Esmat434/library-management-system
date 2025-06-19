@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Library Notification</title>
+    <style type="text/css">
+        /* Client-specific resets */
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        
+
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f8fafc;
+            /* A light gray background */
+        }
+
+        /* General Styles */
+        a {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+                margin: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0 !important; padding: 0 !important; background-color: #f8fafc;" bgcolor="#f8fafc">
+
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div
+        style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; font-family: sans-serif;">
+        This is a notification from your library.
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <tr>
+            <td align="center" style="background-color: #f8fafc;">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                    style="max-width: 600px; border-collapse: collapse;" class="email-container">
+
+                    <!-- Header: Logo -->
+                    <tr>
+                        <td align="center" valign="top" style="padding: 20px 0;">
+                            <img src="https://placehold.co/150x50/6366f1/white?text=LibrarySys" width="150" height="50"
+                                alt="LibrarySys Logo"
+                                style="display: block; font-family: sans-serif; font-size: 18px; color: #333333;">
+                        </td>
+                    </tr>
+
+                    <!-- Main Content Section -->
+                    <tr>
+                        <td style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);"
+                            bgcolor="#ffffff">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                style="border-collapse: collapse;">
+                                <tr>
+                                    <td
+                                        style="padding: 40px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; color: #374151;">
+
+                                        <!-- Notification Icon -->
+                                        <div style="text-align: center; margin-bottom: 20px;">
+                                            <!-- You can change the icon based on the notification type -->
+                                            <!-- Borrow Icon -->
+                                            <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/borrow-book-2078990-1757778.png"
+                                                alt="Success Icon" width="64" height="64"
+                                                style="display: inline-block;">
+                                        </div>
+
+                                        <!-- Email Title -->
+                                        <h1
+                                            style="margin: 0 0 20px; text-align: center; font-size: 24px; line-height: 30px; color: #111827; font-weight: bold;">
+                                            <!-- This title can be changed dynamically -->
+                                            {{subject}}
+                                        </h1>
+
+                                        <!-- Email Body -->
+                                        <p style="margin: 0 0 30px; text-align: center;">
+                                            Hi {{ instance.user.username }}, this is a confirmation that you have {{title}} the
+                                            following book from our library.
+                                        </p>
+
+                                        <!-- Transaction Details -->
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                            style="border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 30px; border-collapse: collapse;">
+                                            <!-- Example for BORROW notification -->
+                                            <tr>
+                                                <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;">
+                                                    <p style="margin: 0; font-size: 14px; color: #6b7280;">Book Title
+                                                    </p>
+                                                    <p
+                                                        style="margin: 4px 0 0; font-size: 16px; font-weight: bold; color: #111827;">
+                                                        {{ instance.book_copy.book.title }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;">
+                                                    {% if title == 'borrowed' %}
+                                                        <p style="margin: 0; font-size: 14px; color: #6b7280;">Borrow Date
+                                                        </p>
+                                                        <p style="margin: 4px 0 0; font-size: 16px; color: #111827;">
+                                                            {{ instance.borrow_date }}</p>
+                                                    {% else %}
+                                                        <p style="margin: 0; font-size: 14px; color: #6b7280;">Reservation Date
+                                                        </p>
+                                                        <p style="margin: 4px 0 0; font-size: 16px; color: #111827;">
+                                                            {{ instance.reservation_date }}
+                                                        </p>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% if title == 'borrowed' %}
+                                                <tr>
+                                                    <td style="padding: 15px;">
+                                                            <p style="margin: 0; font-size: 14px; color: #6b7280;">Due Date</p>
+                                                            <p
+                                                                style="margin: 4px 0 0; font-size: 16px; font-weight: bold; color: #c026d3;">
+                                                                {{ instance.due_date}}</p>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        </table>
+
+                                        <!-- Optional Call to Action -->
+                                        <p style="margin: 0 0 20px; text-align: center;">
+                                            You can view your full borrowing history by visiting your account page.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Section -->
+                    <tr>
+                        <td align="center"
+                            style="padding: 20px; font-family: Arial, sans-serif; font-size: 12px; line-height: 18px; color: #6b7280;">
+                            <p style="margin: 0 0 10px;">
+                                This is an automated notification. Please do not reply to this email.
+                            </p>
+                            <p style="margin: 0;">
+                                Library Management System, 123 Library St, Booktown, BK 54321
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
