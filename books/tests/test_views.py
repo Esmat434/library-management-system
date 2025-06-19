@@ -32,7 +32,7 @@ class TestBookDetailView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://test/vm.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.url = reverse('books:book_detail',args=[self.book.slug])
@@ -53,7 +53,7 @@ class TestBookFilterByAuthorView(TestCase):
         self.author = Author.objects.create(username='test', email='test@gmail.com', age=20)
 
     def test_get_book_filter_by_author_validate_data(self):
-        response = self.client.get(self.url,{'q':self.author.username})
+        response = self.client.get(self.url,{'author':self.author.username})
 
         self.assertTemplateUsed(response,'books/book_list.html')
         self.assertEqual(response.status_code,200)
@@ -68,7 +68,7 @@ class TestBookFilterByPublisherView(TestCase):
         self.publisher = Publisher.objects.create(username='test', email='test@gmail.com', age=20)
 
     def test_get_book_filter_by_publisher(self):
-        response = self.client.get(self.url,{'q':self.publisher.username})
+        response = self.client.get(self.url,{'publisher':self.publisher.username})
 
         self.assertTemplateUsed(response,'books/book_list.html')
         self.assertEqual(response.status_code,200)
@@ -83,14 +83,36 @@ class TestBookFilterByCategoryView(TestCase):
         self.category = Category.objects.create(name='test_category')
     
     def test_get_book_filter_by_category(self):
-        response = self.client.get(self.url,{'q':self.category.name})
+        response = self.client.get(self.url,{'category':self.category.name})
 
         self.assertTemplateUsed(response,'books/book_list.html')
         self.assertEqual(response.status_code,200)
 
         self.assertEqual(len(response.context['books']),0)
         self.assertIn('books',response.context)
+
+class TestBookSearchView(TestCase):
+    def setUp(self):
+        self.url = reverse('books:book_search')
     
+    def test_get_book_search_view(self):
+        response = self.client.get(self.url,{'q':'test'})
+
+        self.assertTemplateUsed(response,'books/book_list.html')
+        self.assertEqual(response.status_code,200)
+
+        self.assertIn('books',response.context)
+        self.assertEqual(len(response.context['books']),0)
+
+        self.assertIn('categories',response.context)
+        self.assertEqual(len(response.context['categories']),0)
+
+        self.assertIn('authors',response.context)
+        self.assertEqual(len(response.context['authors']),0)
+
+        self.assertIn('publishers',response.context)
+        self.assertEqual(len(response.context['publishers']),0)
+
 class TestBorrowTransactionListView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -128,7 +150,7 @@ class TestBorrowTransactionCreateView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://test/cm.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
@@ -164,8 +186,8 @@ class TestReservedListView(TestCase):
         self.assertTemplateUsed(response,'books/reserved_list.html')
         self.assertEqual(response.status_code,200)
 
-        self.assertEqual(len(response.context['books']),0)
-        self.assertIn('books',response.context)
+        self.assertEqual(len(response.context['reserve_books']),0)
+        self.assertIn('reserve_books',response.context)
     
 class TestReservationCreateView(TestCase):
     def setUp(self):
@@ -186,7 +208,7 @@ class TestReservationCreateView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://test/cm.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
@@ -222,7 +244,7 @@ class TestReturnBorrowView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://test/cm.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
