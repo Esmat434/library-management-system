@@ -27,6 +27,11 @@ class TestUrls(SimpleTestCase):
         url_name = 'books:book_filter_by_publisher'
         url_path = reverse(url_name)
         self.assertEqual(url_path,'/books/filter/publisher/')
+
+    def test_book_search_url_is_reversed(self):
+        url_name = 'books:book_search'
+        url_path = reverse(url_name)
+        self.assertEqual(url_path,'/book/search/data/')
     
     def test_borrow_url_is_reversed(self):
         url_name = 'books:borrow_transaction_list'
