@@ -3,6 +3,7 @@ from django.http import HttpResponseNotFound,HttpResponseBadRequest
 from django.views import View
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import Q
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.utils.timezone import now
 from datetime import timedelta
@@ -19,12 +20,19 @@ from .models import (
 class BookListView(View):
     def get(self,request):
         books = self.get_paginator(request)
-        return render(request,'books/book_list.html',{'books':books})
+        categories = Category.objects.filter(books__isnull=False).distinct()
+        authors = Author.objects.filter(books__isnull=False).distinct()
+        publishers = Publisher.objects.filter(books__isnull=False).distinct()
+        return render(
+            request,
+            'books/book_list.html',
+            {'books':books,'categories':categories,'authors':authors,'publishers':publishers}
+            )
 
     def get_paginator(self,request):
-        books = Book.objects.select_related('author','publisher','category').all()
+        books = Book.objects.all().order_by('id')
         
-        paginator = Paginator(books,10)
+        paginator = Paginator(books,12)
 
         page_number = request.GET.get('page')
 
@@ -40,7 +48,7 @@ class BookListView(View):
 class BookDetailView(View):
     def get(self,request,slug):
         book = get_object_or_404(Book,slug = slug)
-        book_copy = BookCopy.objects.filter(book = book,status = 'available')
+        book_copy = BookCopy.objects.filter(book = book)
         return render(request,'books/book_detail.html',{'book':book,'book_copy':book_copy})
 
 # Helper Function For Filtering
@@ -48,7 +56,11 @@ def filter_books_by(request,model,filter_name,attr_name,tamplate_name='books/boo
     query = request.GET.get(filter_name,'')
     obj = get_object_or_404(model,**{attr_name:query})
     books = obj.books.all()
-    return render(request,tamplate_name,{'books':books})
+    categories = Category.objects.filter(books__isnull=False).distinct()
+    authors = Author.objects.filter(books__isnull=False).distinct()
+    publishers = Publisher.objects.filter(books__isnull=False).distinct()
+    return render(request,tamplate_name,{'books':books,'categories':categories,'authors':authors
+                                        ,'publishers':publishers})
 
 class BookFilterByCategoryView(View):
     def get(self,request):
@@ -62,9 +74,41 @@ class BookFilterByPublisherView(View):
     def get(self,request):
         return filter_books_by(request,Publisher,'publisher','username')
 
+class BookSearch(View):
+    def get(self,request):
+        q = request.GET.get('q','')
+        categories = Category.objects.filter(books__isnull=False).distinct()
+        authors = Author.objects.filter(books__isnull=False).distinct()
+        publishers = Publisher.objects.filter(books__isnull=False).distinct()
+        if not q:
+            books = Book.objects.all().order_by('id')
+            books = self.get_paginator(request,books)
+            return render(request,'books/book_list.html',{'books':books,'categories':categories,
+                                                          'authors':authors,'publishers':publishers})
+        
+        books = Book.objects.filter(Q(title__icontains=q)|Q(description__icontains=q)).order_by('id')
+        books = self.get_paginator(request,books)
+        
+        return render(request,'books/book_list.html',{'books':books,'categories':categories,
+                                                      'authors':authors,'publishers':publishers})
+    
+    def get_paginator(self,request,books):
+        paginator = Paginator(books,10)
+
+        page_number = request.GET.get('page')
+
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+        
+        return page_obj
+
 class BorrowTransactionListView(LoginRequiredMixin,View):
     def get(self,request):
-        borrows = BorrowTransaction.objects.filter(user = request.user,is_returned=False)
+        borrows = BorrowTransaction.objects.filter(user = request.user)
         return render(request,'books/borrow_transaction_list.html',{'borrows':borrows})
 
 class BorrowTransactionCreateView(LoginRequiredMixin,View):
@@ -75,7 +119,7 @@ class BorrowTransactionCreateView(LoginRequiredMixin,View):
 
         book_copy = get_object_or_404(BookCopy, book=book, copy_number=copy_number)
 
-        if book_copy.status != 'available':
+        if book_copy.status not in ['available','reserved']:
             return HttpResponseNotFound("This book copy is not available.")
         
         with transaction.atomic():
@@ -101,8 +145,8 @@ class BorrowTransactionCreateView(LoginRequiredMixin,View):
 
 class ReservedListView(LoginRequiredMixin,View):
     def get(self,request):
-        books = Reservation.objects.filter(user = request.user)
-        return render(request,'books/reserved_list.html',{'books':books})
+        reserve_books = Reservation.objects.filter(user = request.user)
+        return render(request,'books/reserved_list.html',{'reserve_books':reserve_books})
 
 class ReservationCreateView(LoginRequiredMixin,View):
     def post(self,request,slug):
