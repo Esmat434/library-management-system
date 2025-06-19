@@ -12,9 +12,9 @@ def send_borrow_transaction_notification(sender,created,instance,**kwargs):
     if created:
         send_notification_email(
             instance.user.email,
-            'Borrow Notification',
-            instance.book_copy.book.title,
-            instance.user.username
+            'Borrow Book Notification',
+            instance,
+            'borrowed'
         )
 
 @receiver(post_save, sender=Reservation)
@@ -23,6 +23,6 @@ def send_reserved_notification(sender,created,instance,**kwargs):
         send_notification_email(
             instance.user.email,
             'Reserved Book Notication',
-            instance.book_copy.book.title,
-            instance.user.username
+            instance,
+            'reserved'
         )
