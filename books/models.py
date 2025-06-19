@@ -82,6 +82,7 @@ class BorrowTransaction(models.Model):
     book_copy = models.ForeignKey(BookCopy, on_delete=models.PROTECT,related_name='borrow_transaction')
     fine_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     is_returned = models.BooleanField(default=False)
+    borrow_date = models.DateField(auto_now_add=True)
     due_date = models.DateField()
     return_date = models.DateField(blank=True,null=True)
 
