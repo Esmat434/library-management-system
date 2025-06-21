@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>We've Received Your Message</title>
+    <style type="text/css">
+        /* Client-specific resets */
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f8fafc;
+            /* A light gray background */
+        }
+
+        /* General Styles */
+        a {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+                margin: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0 !important; padding: 0 !important; background-color: #f8fafc;" bgcolor="#f8fafc">
+
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div
+        style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; font-family: sans-serif;">
+        Thank you for contacting us. We'll get back to you shortly.
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <tr>
+            <td align="center" style="background-color: #f8fafc;">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                    style="max-width: 600px; border-collapse: collapse;" class="email-container">
+
+                    <!-- Header: Logo -->
+                    <tr>
+                        <td align="center" valign="top" style="padding: 20px 0;">
+                            <img src="https://placehold.co/150x50/6366f1/white?text=LibrarySys" width="150" height="50"
+                                alt="LibrarySys Logo"
+                                style="display: block; font-family: sans-serif; font-size: 18px; color: #333333;">
+                        </td>
+                    </tr>
+
+                    <!-- Main Content Section -->
+                    <tr>
+                        <td style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);"
+                            bgcolor="#ffffff">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                style="border-collapse: collapse;">
+                                <tr>
+                                    <td
+                                        style="padding: 40px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; color: #374151;">
+
+                                        <!-- Email Title -->
+                                        <h1
+                                            style="margin: 0 0 20px; font-size: 24px; line-height: 30px; color: #111827; font-weight: bold;">
+                                            We've Received Your Message
+                                        </h1>
+
+                                        <!-- Email Body -->
+                                        <p style="margin: 0 0 20px;">
+                                            Hi {{ username }}, <!-- Use Django template variable for user's name -->
+                                        </p>
+                                        <p style="margin: 0 0 20px;">
+                                            Thank you for reaching out to us. This is an automated confirmation that we
+                                            have successfully received your inquiry. Our team will review your message
+                                            and get back to you as soon as possible.
+                                        </p>
+                                        <p style="margin: 0 0 30px;">
+                                            Typically, we respond within <strong>1-2 business days</strong>.
+                                        </p>
+
+                                        <!-- Recap of User's Message -->
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                            style="border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 30px; border-collapse: collapse;">
+                                            <tr>
+                                                <td style="padding: 20px; background-color: #f9fafb;" bgcolor="#f9fafb">
+                                                    <h2
+                                                        style="margin: 0 0 15px; font-size: 16px; color: #111827; font-weight: bold;">
+                                                        Here is a copy of your message:</h2>
+                                                    <p style="margin: 0 0 5px; font-size: 14px; color: #6b7280;">
+                                                        <strong>Subject:</strong> {{ title }}</p>
+                                                    <p
+                                                        style="margin: 0; font-size: 14px; color: #6b7280; white-space: pre-wrap; word-break: break-word; border-left: 3px solid #d1d5db; padding-left: 15px; font-style: italic;">
+                                                        {{ message }}</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <p style="margin: 0;">
+                                            Sincerely,<br>The LibrarySys Team
+                                        </p>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Section -->
+                    <tr>
+                        <td align="center"
+                            style="padding: 20px; font-family: Arial, sans-serif; font-size: 12px; line-height: 18px; color: #6b7280;">
+                            <p style="margin: 0 0 10px;">
+                                This is an automated notification. Please do not reply to this email.
+                            </p>
+                            <p style="margin: 0;">
+                                Library Management System, 123 Library St, Booktown, BK 54321
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

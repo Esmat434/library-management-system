@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Library Management System</title>
+
+    <!-- Bootstrap 5 CSS for Grid System and basic components -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        /* Use a combination of fonts for a classic yet modern feel */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            /* Tailwind's gray-50 */
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-serif {
+            font-family: 'Lora', serif;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1600x800/6366f1/white?text=Our+Library');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .team-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky-top">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-book-open text-2xl text-indigo-600"></i>
+                    <a href="#" class="text-2xl font-bold text-gray-800">LibrarySys</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'books:home' %}" class="text-gray-600 hover:text-indigo-600">Home</a>
+                    <a href="{% url 'books:borrow_transaction_list' %}" class="text-gray-600 hover:text-indigo-600">Borrows</a>
+                    <a href="{% url 'books:reserved_list' %}" class="text-gray-600 hover:text-indigo-600">Reservations</a>
+                    <a href="{% url 'core:about_us' %}" class="text-gray-600 hover:text-indigo-600">About Us</a>
+                    <a href="{% url 'core:contact_us' %}" class="text-gray-600 hover:text-indigo-600">Contact Us</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-indigo-600 md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    {% if not request.user.is_authenticated %}
+                    <a href="{% url 'accounts:login' %}"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition no-underline">Login</a>
+                    <a href="{% url 'accounts:register' %}"
+                        class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition no-underline">Register</a>
+                    {% else %}
+                        {% if request.user.role == 'admin' or request.user.role == 'librarian' %}
+                        <a href="{% url 'dashboard:dashboard' %}" class="text-gray-600 hover:text-indigo-600 no-underline">Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'accounts:profile' %}" class="text-gray-600 hover:text-indigo-600 no-underline">Profile</a>
+                        <a href="{% url 'accounts:logout' %}"
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition no-underline">Logout</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden pb-4" id="mobile-menu">
+                <a href="{% url 'books:home' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Home</a>
+                <a href="{% url 'books:borrow_transaction_list' %}"
+                    class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Borrows</a>
+                <a href="{% url 'books:reserved_list' %}"
+                    class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Reservations</a>
+                <a href="{% url 'core:about_us' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">About Us</a>
+                <a href="{% url 'core:contact_us' %}" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg text-white">
+        <div class="container mx-auto px-4 py-24 md:py-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold font-serif">Connecting Our Community Through Knowledge</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-200">For over 50 years, our library has been a
+                cornerstone of the community, fostering a love for reading and lifelong learning.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 md:py-20">
+
+        <!-- Our Mission Section -->
+        <section class="mb-16 md:mb-24">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <img src="https://placehold.co/600x400/a5b4fc/FFFFFF?text=Reading+Area"
+                        alt="A quiet reading area in the library" class="rounded-xl shadow-lg w-full">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif">Our Mission</h2>
+                    <p class="mt-4 text-lg text-gray-600">Our mission is to provide free and equal access to
+                        information, knowledge, and entertainment. We are dedicated to empowering our community by
+                        fostering literacy, supporting education, and encouraging a passion for discovery in a welcoming
+                        and inclusive environment.</p>
+                    <a href="#"
+                        class="mt-6 inline-block bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Support
+                        Our Mission</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our History Timeline Section -->
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif">Our Journey</h2>
+                <p class="mt-3 text-lg text-gray-600">A brief history of our library's milestones.</p>
+            </div>
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 h-full w-0.5 bg-gray-300" style="transform: translateX(-50%);"></div>
+                <!-- Timeline Items -->
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="flex justify-center items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <h3 class="font-bold text-xl text-indigo-600">1974</h3>
+                            <p class="text-gray-700 mt-2">The library first opens its doors in the old town hall, with a
+                                collection of just 500 books donated by the community.</p>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white z-10">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="flex justify-center items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div
+                            class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white z-10">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="w-1/2 pl-8 text-left">
+                            <h3 class="font-bold text-xl text-indigo-600">1995</h3>
+                            <p class="text-gray-700 mt-2">We move to our current, purpose-built location, expanding our
+                                collection and introducing public access computers.</p>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="flex justify-center items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <h3 class="font-bold text-xl text-indigo-600">2010</h3>
+                            <p class="text-gray-700 mt-2">The digital era begins with the launch of our first e-book and
+                                audiobook lending service.</p>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white z-10">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meet the Team Section -->
+        <section class="text-center bg-gray-100 py-16 rounded-2xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif">Meet Our Team</h2>
+            <p class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">Our dedicated staff is here to help you on your
+                learning journey.</p>
+            <div class="row justify-content-center mt-12 g-5">
+                <!-- Team Member 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="bg-white p-6 rounded-xl shadow-sm h-100 team-card">
+                        <img src="https://placehold.co/150x150/a5b4fc/FFFFFF?text=JS"
+                            class="w-32 h-32 rounded-full mx-auto" alt="Photo of Jane Smith">
+                        <h4 class="font-bold text-xl mt-4">Jane Smith</h4>
+                        <p class="text-indigo-600 font-medium">Head Librarian</p>
+                        <p class="text-gray-600 mt-2 text-sm">With over 20 years of experience, Jane is passionate about
+                            connecting people with the perfect book.</p>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="bg-white p-6 rounded-xl shadow-sm h-100 team-card">
+                        <img src="https://placehold.co/150x150/fca5a5/FFFFFF?text=MD"
+                            class="w-32 h-32 rounded-full mx-auto" alt="Photo of Michael Davis">
+                        <h4 class="font-bold text-xl mt-4">Michael Davis</h4>
+                        <p class="text-indigo-600 font-medium">Children's Librarian</p>
+                        <p class="text-gray-600 mt-2 text-sm">Michael brings stories to life during our weekly story
+                            time and helps young readers find new adventures.</p>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="bg-white p-6 rounded-xl shadow-sm h-100 team-card">
+                        <img src="https://placehold.co/150x150/93c5fd/FFFFFF?text=EW"
+                            class="w-32 h-32 rounded-full mx-auto" alt="Photo of Emily White">
+                        <h4 class="font-bold text-xl mt-4">Emily White</h4>
+                        <p class="text-indigo-600 font-medium">Technology & Resources</p>
+                        <p class="text-gray-600 mt-2 text-sm">Emily manages our digital resources and is always ready to
+                            help with our public computers and online services.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-6 text-center">
+            <p>&copy; 2025 Library Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript for Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>
