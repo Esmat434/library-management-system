@@ -12,4 +12,4 @@ from .models import (
 @receiver(post_save,sender=Contact)
 def send_contact_message_notification(sender,created,instance,**kwargs):
     if created:
-        send_message_email(Contact.email,'Contact US',instance.title,instance.message,instance.username)
+        send_message_email('Contact US',instance.title,instance.message,instance.username)
