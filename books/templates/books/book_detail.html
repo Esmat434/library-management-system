@@ -86,14 +86,15 @@
                     <a href="{% url 'accounts:register' %}"
                         class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition no-underline">Register</a>
                     {% else %}
-                    {% if request.user.role == 'admin' or request.user.role == 'librarian' %}
-                    <a href="{% url 'dashboard:dashboard' %}"
-                        class="text-gray-600 hover:text-indigo-600 no-underline">Dashboard</a>
-                    {% endif %}
-                    <a href="{% url 'accounts:profile' %}"
-                        class="text-gray-600 hover:text-indigo-600 no-underline">Profile</a>
-                    <a href="{% url 'accounts:logout' %}"
-                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition no-underline">Logout</a>
+                        {% if request.user.role == 'admin' or request.user.role == 'librarian' %}
+                        <a href="{% url 'dashboard:dashboard' %}"
+                            class="text-gray-600 hover:text-indigo-600 no-underline">Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'accounts:profile' %}"
+                            class="text-gray-600 hover:text-indigo-600 no-underline">Profile</a>
+                        <a href="{% url 'accounts:logout' %}"
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition no-underline">Logout</a>
+                        {% endif %}        
                     {% endif %}
                 </div>
             </div>
