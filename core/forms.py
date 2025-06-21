@@ -9,9 +9,9 @@ class ContactCreationForm(forms.ModelForm):
         model = Contact
         fields = ('username','email','phone_number','title','message')
         widgets = {
-            'username':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Username.'}),
-            'email':forms.EmailInput(attrs={'class':'form-control','placeholder':'Enter Email.'}),
-            'phone_number':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Phone Number.'}),
-            'title':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Title.'}),
-            'message':forms.Textarea(attrs={'class':'forms-control','placeholder':'Enter Message.'})
+            'username':forms.TextInput(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500','placeholder':'Enter Username.'}),
+            'email':forms.EmailInput(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500','placeholder':'Enter Email.'}),
+            'phone_number':forms.TextInput(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500','placeholder':'Enter Phone Number.'}),
+            'title':forms.TextInput(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500','placeholder':'Enter Title.'}),
+            'message':forms.Textarea(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500','placeholder':'Enter Message.'})
         }
