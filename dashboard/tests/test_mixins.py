@@ -7,7 +7,7 @@ User = get_user_model()
 class TestLoginRequired(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='admin', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
