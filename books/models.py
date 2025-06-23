@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 # Create your models here.
 
 User = get_user_model()
@@ -25,6 +26,12 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args,**kwargs):
+        if not self.slug:
+            slug = slugify(self.title)
+            self.slug = slug
+        super().save(*args,**kwargs)
 
 class Category(models.Model):
     name = models.CharField(max_length=155)
