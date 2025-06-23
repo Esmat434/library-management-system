@@ -62,7 +62,10 @@ class BookCopyDeleteView(LoginRequiredMixin,RoleCheckMixin,View):
         book_copy = get_object_or_404(BookCopy, id=pk)
 
         if BorrowTransaction.objects.filter(book_copy=book_copy).exists():
-            messages.error(request,'This book copy data exists in borrow_transaction delete that before delete this book copy.')
+            messages.error(
+                request,
+                'This book copy is linked to one or more borrow transactions. Please delete those transactions before deleting this copy.'
+            )
             return redirect(reverse('dashboard:book_copy_detail',args=[pk]))
         
         if Reservation.objects.filter(book_copy=book_copy).exists():

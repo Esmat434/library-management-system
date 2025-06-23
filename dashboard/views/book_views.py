@@ -32,6 +32,7 @@ class BookCreateView(LoginRequiredMixin,RoleCheckMixin,View):
 
     def post(self,request):
         form = BookCreationForm(request.POST,request.FILES)
+        print(form.errors)
         if form.is_valid():
             form.save()
             messages.success(request,'Your book successfully created.')
@@ -49,11 +50,11 @@ class BookUpdateView(LoginRequiredMixin,RoleCheckMixin,View):
     def post(self,request,slug):
         book = get_object_or_404(Book,slug=slug)
         form = BookUpdateForm(request.POST,request.FILES,instance=book)
-        
+        print(form.errors)
         if form.is_valid():
             form.save()
             messages.success(request,'This book successfully updated.')
-            return redirect(reverse('dashboard:book_detail',args=[book.slug]))
+            return redirect(reverse('dashboard:book_detail',args=[form.instance.slug]))
         else:
             messages.error(request,'Your data was invalid.')
             return render(request,'dashboard/book_update.html',{'form':form})
@@ -64,7 +65,7 @@ class BookDeleteView(LoginRequiredMixin,RoleCheckMixin,View):
 
         if BookCopy.objects.filter(book=book).exists():
             messages.error(request,'The Book Copy of this book exists delete that before delete this')
-            return redirect('dashboard:book_detail')
+            return redirect(reverse('dashboard:book_detail'))
         
         book.delete()
 
