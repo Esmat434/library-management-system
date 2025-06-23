@@ -9,9 +9,9 @@ class BookCopyCreationForm(forms.ModelForm):
         model = BookCopy
         fields = ('book','copy_number','status','location')
         widgets = {
-            'book':forms.Select(attrs={'class':'form-control','placeholder':'Select Book'}),
+            'book':forms.Select(attrs={'class':'form-control'}),
             'copy_number':forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter Copy Number'}),
-            'status':forms.Select(attrs={'class':'form-control','placeholder':'Select Status'}),
+            'status':forms.Select(attrs={'class':'form-control'}),
             'location':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Location'})
         }
     

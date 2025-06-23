@@ -7,7 +7,7 @@ from books.models import (
 class BookCreationForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields =('author','publisher','category','title','description','isbn','slug','avatar',
+        fields =('author','publisher','category','title','description','isbn','avatar',
                   'total_copies','available_copies','published_date'       
                 )
         widgets = {
@@ -17,7 +17,6 @@ class BookCreationForm(forms.ModelForm):
             'title':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Title'}),
             'description':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Description'}),
             'isbn':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Isbn'}),
-            'slug':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Slug'}),
             'avatar':forms.FileInput(attrs={'class':'form-control'}),
             'total_copies':forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter Total Copies'}),
             'available_copies':forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter Avialable Copies'}),
@@ -60,7 +59,7 @@ class BookCreationForm(forms.ModelForm):
 class BookUpdateForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields =('author','publisher','category','title','description','isbn','slug','avatar',
+        fields =('author','publisher','category','title','description','isbn','avatar',
                   'total_copies','available_copies','published_date'       
                 )
         widgets = {
@@ -70,7 +69,6 @@ class BookUpdateForm(forms.ModelForm):
             'title':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Title'}),
             'description':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Description'}),
             'isbn':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Isbn'}),
-            'slug':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Slug'}),
             'avatar':forms.FileInput(attrs={'class':'form-control'}),
             'total_copies':forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter Total Copies'}),
             'available_copies':forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter Avialable Copies'}),
