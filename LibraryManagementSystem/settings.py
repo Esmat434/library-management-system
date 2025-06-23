@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     # third party apps
     'axes',
     # myapp
-    'accounts'
+    'accounts',
+    'books',
+    'dashboard',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -157,6 +160,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+SUPPORT_TEAM_EMAIL = config('SUPPORT_TEAM_EMAIL')
 
 # add Authentication Backend
 AUTHENTICATION_BACKENDS = [

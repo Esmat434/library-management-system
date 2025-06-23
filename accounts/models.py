@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
     city = models.CharField(max_length=255)
     country = CountryField()
     role = models.CharField(max_length=50,default='user',choices=CHOICE_ROLE)
-    birth_date = models.DateField()
+    birth_date = models.DateField(blank=True,null=True)
     email_verified = models.BooleanField(default=False)
     
     def __str__(self):
