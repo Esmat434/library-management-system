@@ -6,10 +6,10 @@ class TestUrls(SimpleTestCase):
         url_name = 'core:about_us'
         url_path = reverse(url_name)
 
-        self.assertEqual(url_path,'/about/')
+        self.assertEqual(url_path,'/core/about/')
 
     def test_contact_us_url(self):
         url_name = 'core:contact_us'
         url_path = reverse(url_name)
 
-        self.assertEqual(url_path,'/contact/')
+        self.assertEqual(url_path,'/core/contact/')
