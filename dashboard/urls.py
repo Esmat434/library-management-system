@@ -18,9 +18,16 @@ from dashboard.views.book_copy_views import (
     BookCopyDeleteView
 )
 
+from dashboard.views.dashboard_views import (
+    DashboardView
+)
+
 app_name = 'dashboard'
 
 urlpatterns = [
+    # Dashboard
+    path('',DashboardView.as_view(),name='dashboard'),
+    
     # Author urls
     path('authors/',AuthorListView.as_view(),name='author_list'),
     path('author/detail/<int:pk>/',AuthorDetailView.as_view(),name='author_detail'),
