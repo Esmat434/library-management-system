@@ -18,7 +18,7 @@ IMAGE_FILE_CONTENT = b'GIF89a\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x0
 class TestBookListView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -39,7 +39,7 @@ class TestBookListView(TestCase):
 class TestBookDetailView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -53,7 +53,7 @@ class TestBookDetailView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.client.login(username='test', password='Test12345%')
@@ -72,7 +72,7 @@ class TestBookDetailView(TestCase):
 class TestBookCreateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -122,7 +122,7 @@ class TestBookCreateView(TestCase):
 class TestBookUpdateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -136,7 +136,7 @@ class TestBookUpdateView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.avatar = SimpleUploadedFile(
@@ -179,7 +179,7 @@ class TestBookUpdateView(TestCase):
 class TestBookDeleteView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -193,7 +193,7 @@ class TestBookDeleteView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.client.login(username='test', password='Test12345%')

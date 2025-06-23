@@ -15,7 +15,7 @@ User = get_user_model()
 class TestCategoryListView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -36,7 +36,7 @@ class TestCategoryListView(TestCase):
 class TestCategoryDetailView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -59,7 +59,7 @@ class TestCategoryDetailView(TestCase):
 class TestCategoryCreateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -90,7 +90,7 @@ class TestCategoryCreateView(TestCase):
 class TestCategoryUpdateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )
@@ -123,7 +123,7 @@ class TestCategoryUpdateView(TestCase):
 class TestCategoryDeleteView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', email_verified=True,
             password='Test12345%'
         )

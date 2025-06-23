@@ -15,7 +15,7 @@ User = get_user_model()
 class TestBookCopyListView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', 
             email_verified=True,password='Test12345%'
         )
@@ -36,7 +36,7 @@ class TestBookCopyListView(TestCase):
 class TestBookCopyDetailView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', 
             email_verified=True,password='Test12345%'
         )
@@ -50,7 +50,7 @@ class TestBookCopyDetailView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
@@ -73,7 +73,7 @@ class TestBookCopyDetailView(TestCase):
 class TestBookCopyCreateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', 
             email_verified=True,password='Test12345%'
         )
@@ -87,7 +87,7 @@ class TestBookCopyCreateView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.data = {
@@ -116,7 +116,7 @@ class TestBookCopyCreateView(TestCase):
 class TestBookCopyUpdateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', 
             email_verified=True,password='Test12345%'
         )
@@ -130,7 +130,7 @@ class TestBookCopyUpdateView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
@@ -163,7 +163,7 @@ class TestBookCopyUpdateView(TestCase):
 class TestBookCopyDeleteView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='test', email='test@gmail.com', avatar='', passport='', 
+            username='test', email='test@gmail.com', avatar='c://file/test.jpg', passport='c://file/test.jpg', 
             address='test', city='test', country='AF',role='librarian', birth_date='2020-01-02', 
             email_verified=True,password='Test12345%'
         )
@@ -177,7 +177,7 @@ class TestBookCopyDeleteView(TestCase):
         self.book = Book.objects.create(
             author=self.author, publisher=self.publisher, category=self.category,
             title='test', description='test description', isbn='123', slug='test',
-            avatar='', total_copies=10, available_copies=10, published_date='2025-06-11'
+            avatar='c://file/test.jpg', total_copies=10, available_copies=10, published_date='2025-06-11'
         )
 
         self.book_copy = BookCopy.objects.create(
