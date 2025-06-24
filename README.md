@@ -21,6 +21,24 @@
   <img src="./docs/library-erd.png" alt="Database Diagram" width="80%" />
 </div>
 
+## 📸 Library System
+
+<div align="center">
+  <img src="./docs/dashboard.png" alt="Database Diagram" width="80%" />
+</div>
+
+<div align="center">
+  <img src="./docs/book_list.png" alt="Database Diagram" width="80%" />
+</div>
+
+<div align="center">
+  <img src="./docs/home.png" alt="Database Diagram" width="80%" />
+</div>
+
+<div align="center">
+  <img src="./docs/borrow_list.png" alt="Database Diagram" width="80%" />
+</div>
+
 > *Designed with draw.io — shows how models like `Book`, `borrow`, and `user` relate.*
 
 ---
