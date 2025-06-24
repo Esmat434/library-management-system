@@ -241,13 +241,13 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center items-center gap-4">
-                                        <form action="{% url 'dashboard:book_delete' book.id %}" method="POST">
+                                        <form action="{% url 'dashboard:book_delete' book.slug %}" method="POST">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-link font-medium text-red-600 hover:text-red-800">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                         </form>
-                                        <a href="{% url 'dashboard:book_detail' book.id %}"
+                                        <a href="{% url 'dashboard:book_detail' book.slug %}"
                                             class="font-medium text-indigo-600 hover:text-indigo-800">
                                             <i class="fas fa-edit"></i> View Detail
                                         </a>
