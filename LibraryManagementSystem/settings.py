@@ -92,8 +92,8 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'HOST': config('DB_HOST'),   # Or an IP Address that your DB is hosted on
+        'PORT': config('DB_PORT'),
     }
 }
 
