@@ -103,7 +103,7 @@ python manage.py migrate
 
 # Start dev server
 python manage.py runserver
-
+```
 
 ## 👤 Author
 Esmayullah — Software Engineer & Django Enthusiast
