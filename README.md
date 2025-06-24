@@ -91,6 +91,10 @@ docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
 
 ## 🧪 Development (without Docker)
+# clone repo
+git clone https://github.com/Esmat434/library-management-system.git
+cd LibraryManagementSystem 
+
 # Create virtual environment
 python -m venv env
 source env/bin/activate   # Windows: env\Scripts\activate
