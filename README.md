@@ -51,7 +51,7 @@
 
 ## 📁 Project Structure
 
-```bash
+```markdown
 LibraryManagementSystem/
 ├── accounts/
 │   ├── models.py
@@ -79,7 +79,7 @@ LibraryManagementSystem/
 ├── docker-compose.yml
 ├── manage.py
 └── README.md
-
+```
 
 ## 🐳 Docker Setup
 
