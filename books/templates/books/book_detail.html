@@ -236,9 +236,9 @@
                             <div>
                                 <p class="font-semibold text-gray-800 font-mono">{{ copy.id }}</p>
                                 <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        {% if copy.status == 'Available' %}status-available
-                                        {% elif copy.status == 'Borrowed' %}status-borrowed
-                                        {% elif copy.status == 'Reserved' %}status-reserved
+                                        {% if copy.status == 'available' %}status-available
+                                        {% elif copy.status == 'borrowed' %}status-borrowed
+                                        {% elif copy.status == 'reserved' %}status-reserved
                                         {% endif %}">
                                     {{ copy.status }}
                                 </span>
@@ -246,16 +246,16 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             {% if copy.status == 'available' %}
-                            <form action="{% url 'books:borrow_transaction_create' book.slug %}" method="POST" class="d-inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="q" value="{{copy.copy_number}}">
-                                <button type="submit"
-                                    class="btn btn-primary btn-sm bg-indigo-600 border-indigo-600">Borrow</button>
-                            </form>
-                            <form action="{% url 'books:reserved_create' book.slug %}" method="POST" class="d-inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="q" value="{{copy.copy_number}}">
-                                <button type="submit" class="btn btn-outline-secondary btn-sm">Reserve</button>
+                                <form action="{% url 'books:borrow_transaction_create' book.slug %}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="q" value="{{copy.copy_number}}">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-sm bg-indigo-600 border-indigo-600">Borrow</button>
+                                </form>
+                                <form action="{% url 'books:reserved_create' book.slug %}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="q" value="{{copy.copy_number}}">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm">Reserve</button>
                             </form>
                             {% elif copy.status == 'borrowed' %}
                                 <button class="btn btn-outline-secondary btn-sm" disabled>Borrowed</button>
