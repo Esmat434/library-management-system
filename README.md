@@ -49,37 +49,34 @@
 
 ---
 
-## 🧱 Project Structure
+## 📁 Project Structure
+
+```bash
 LibraryManagementSystem/
-├── accounts/                 # Django app
-|   ├── templates/
-|   |   └──...
+├── accounts/
 │   ├── models.py
 │   ├── views.py
-│   └── ...
-├── books/                 # Django app
-|   ├── templates/
-|   |   └──...
+│   └── templates/
+│       └── ...
+├── books/
 │   ├── models.py
 │   ├── views.py
-│   └── ...
-├── dasboard/                 # Django app
-|   ├── templates/
-|   |   └──...
-│   ├── models.py
-│   ├── views/
-|   |   └── ...   
-│   └── ...
-├── core/                 # Django app
-|   ├── templates/
-|   |   └──...
+│   └── templates/
+│       └── ...
+├── dashboard/
 │   ├── models.py
 │   ├── views.py
-│   └── ...
-├── static/                  # CSS/JS assets
-├── docs/                    # ERD, architecture docs
-├── Dockerfile               # Docker image definition
-├── docker-compose.yml       # Multi-container definition
+│   └── templates/
+│       └── ...
+├── core/
+│   ├── models.py
+│   ├── views.py
+│   └── templates/
+│       └── ...
+├── static/
+├── docs/
+├── Dockerfile
+├── docker-compose.yml
 ├── manage.py
 └── README.md
 
