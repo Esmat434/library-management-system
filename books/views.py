@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseNotFound,HttpResponseBadRequest
 from django.views import View
 from django.contrib import messages
-from django.db import transaction
+from django.db import transaction,IntegrityError
 from django.db.models import Q
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.utils.timezone import now
@@ -48,7 +48,7 @@ class BookListView(View):
 class BookDetailView(View):
     def get(self,request,slug):
         book = get_object_or_404(Book,slug = slug)
-        book_copy = BookCopy.objects.filter(book = book)
+        book_copy = BookCopy.objects.filter(book = book,status='available')
         return render(request,'books/book_detail.html',{'book':book,'book_copy':book_copy})
 
 # Helper Function For Filtering
@@ -111,37 +111,80 @@ class BorrowTransactionListView(LoginRequiredMixin,View):
         borrows = BorrowTransaction.objects.filter(user = request.user)
         return render(request,'books/borrow_transaction_list.html',{'borrows':borrows})
 
-class BorrowTransactionCreateView(LoginRequiredMixin,View):
-    def post(self,request,slug):
-        copy_number = request.POST.get('q')
+class BorrowTransactionCreateView(LoginRequiredMixin, View):
+    def post(self, request, slug):
+        book, book_copy = self.get_book_and_copy(slug, request.POST.get("q"))
 
-        book = get_object_or_404(Book, slug=slug)
-
-        book_copy = get_object_or_404(BookCopy, book=book, copy_number=copy_number)
-
-        if book_copy.status not in ['available','reserved']:
+        if not self.is_copy_available(book_copy):
             return HttpResponseNotFound("This book copy is not available.")
-        
-        with transaction.atomic():
-            BorrowTransaction.objects.create(
-                user = request.user,
-                book_copy = book_copy,
-                due_date = now() + timedelta(days=10)
-            )
 
-            # Update status
-            book_copy.status = 'borrowed'
-            book_copy.save()
+        if self.has_active_transaction(request.user, book_copy):
+            messages.error(request, "You have already borrowed this book copy.")
+            return redirect("books:borrow_transaction_list")
 
-            # Decrease available copies
-            book.available_copies-=1
-            book.save()
+        if self.reuse_returned_transaction(request.user, book_copy):
+            self.cleanup_after_borrow(request.user, book, book_copy)
+            messages.success(request, "You have successfully borrowed this book copy again.")
+            return redirect("books:borrow_transaction_list")
 
-            # Delete Reservation is it exists
-            Reservation.objects.filter(user=request.user, book_copy=book_copy).delete()
+        try:
+            with transaction.atomic():
+                self.create_new_transaction(request.user, book_copy)
+                self.cleanup_after_borrow(request.user, book, book_copy)
+                messages.success(request, "This Book Successfully Borrowed.")
+        except IntegrityError:
+            messages.error(request, "This borrow transaction already exists.")
 
-        messages.success(request,'This Book Successfully Borrowed.')
-        return redirect('books:borrow_transaction_list')
+        return redirect("books:borrow_transaction_list")
+
+    # ----------------------------
+    # Helper Methods
+    # ----------------------------
+
+    def get_book_and_copy(self, slug, copy_number):
+        book = get_object_or_404(Book, slug=slug)
+        book_copy = get_object_or_404(BookCopy, book=book, copy_number=copy_number)
+        return book, book_copy
+
+    def is_copy_available(self, book_copy):
+        return book_copy.status in ['available', 'reserved']
+
+    def has_active_transaction(self, user, book_copy):
+        return BorrowTransaction.objects.filter(
+            user=user,
+            book_copy=book_copy,
+            is_returned=False
+        ).exists()
+
+    def reuse_returned_transaction(self, user, book_copy):
+        transaction = BorrowTransaction.objects.filter(
+            user=user,
+            book_copy=book_copy,
+            is_returned=True
+        ).first()
+
+        if transaction:
+            transaction.is_returned = False
+            transaction.due_date = now() + timedelta(days=10)
+            transaction.save()
+            return True
+        return False
+
+    def create_new_transaction(self, user, book_copy):
+        BorrowTransaction.objects.create(
+            user=user,
+            book_copy=book_copy,
+            due_date=now() + timedelta(days=10)
+        )
+
+    def cleanup_after_borrow(self, user, book, book_copy):
+        book_copy.status = 'borrowed'
+        book_copy.save()
+
+        book.available_copies -= 1
+        book.save()
+
+        Reservation.objects.filter(user=user, book_copy=book_copy).delete()
 
 class ReservedListView(LoginRequiredMixin,View):
     def get(self,request):
